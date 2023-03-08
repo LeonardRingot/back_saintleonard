@@ -1,5 +1,5 @@
 import { Router } from "express";
-import handler from "./handler";
+import handler from "../../modules/Handler/handler";
 
 export const router = Router();
 
