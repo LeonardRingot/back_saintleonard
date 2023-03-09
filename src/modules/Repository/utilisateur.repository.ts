@@ -1,11 +1,10 @@
-import { UserDto } from "../Dto/utilisateur.DTO";
+import { UserDto } from "../Dto/utilisateur.dto";
 import { User } from "../Models/utilisateur.model";
 import { UserMapper } from "../Mapper/utilisateur.mapper";
 import { IRepository } from "../core/repository.interface";
 import { NotFoundError } from "../core/errors/errors";
 
 export class UserRepository implements IRepository<UserDto> {
-
 
 	/**
 	 *

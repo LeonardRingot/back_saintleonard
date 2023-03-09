@@ -1,4 +1,4 @@
-import { UserDto } from "../Dto/utilisateur.DTO";
+import { UserDto } from "../Dto/utilisateur.dto";
 import { IRepository } from "../core/repository.interface";
 import { User } from "../Models/utilisateur.model";
 import { IService } from "../core/service.interface";
@@ -68,5 +68,3 @@ export class UserService implements IService<UserDto> {
 			});
 	}
 }
-
-export { IService };

@@ -1,4 +1,4 @@
-import { UserAuthDto, UserDto } from "../Dto/utilisateur.Dto";
+import { UserAuthDto, UserDto } from "../Dto/utilisateur.dto";
 import { User } from "../Models/utilisateur.model";
 
 export class UserMapper {

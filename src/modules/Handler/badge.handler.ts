@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 import { IService } from "../core/service.interface";
-import { UserDto } from "../Dto/utilisateur.dto";
+import { BadgeDto } from "../Dto/badge.dto";
 
-const bcrypt = require("bcrypt");
 
-export class UserHandler {
-	private userService: IService<UserDto>;
+export class BadgeHandler {
+	private badgeService: IService<BadgeDto>;
 
-	constructor(userService: IService<UserDto>) {
-		this.userService = userService;
+	constructor(badgeService: IService<BadgeDto>) {
+		this.badgeService = badgeService;
 	}
 
 	/**
@@ -19,7 +18,7 @@ export class UserHandler {
      */
 	getUsers = async (req: Request, res: Response) => {
 		try {
-			const result = await this.userService.findAll();
+			const result = await this.badgeService.findAll();
 			if (result === null) return res.status(404).send();
 			res.status(200).json(result);
 		} catch (err) {
@@ -36,7 +35,7 @@ export class UserHandler {
      */
 	getUserById = async (req: Request, res: Response) => {
 		try {
-			const result = await this.userService.findById(parseInt(req.params.id));
+			const result = await this.badgeService.findById(parseInt(req.params.id));
 			if (result === null) {
 				return res.status(404).send();
 			}
@@ -54,8 +53,7 @@ export class UserHandler {
      */
 	createUser = async (req: Request, res: Response) => {
 		try {
-			req.body.password = await bcrypt.hash(req.body.password, 10);
-			const result = await this.userService.create(req.body);
+			const result = await this.badgeService.create(req.body);
 			return res.status(200).json(result);
 		} catch (error) {
 			return res.status(500).json(error);
@@ -70,11 +68,7 @@ export class UserHandler {
      */
 	updateUser = async (req: Request, res: Response) => {
 		try {
-			if (req.body.password) {
-				let hashedPassword = await bcrypt.hash(req.body.password, 10);
-				req.body = { ...req.body, password: hashedPassword };
-			}
-			const result = await this.userService.update(req.body, parseInt(req.params.id));
+			const result = await this.badgeService.update(req.body, parseInt(req.params.id));
 			return res.status(200).json(result);
 		} catch (error) {
 			return res.status(500).json(error);
@@ -89,10 +83,10 @@ export class UserHandler {
      */
 	deleteUser = async (req: Request, res: Response) => {
 		try {
-			const result = await this.userService.delete(parseInt(req.params.id));
+			const result = await this.badgeService.delete(parseInt(req.params.id));
 			return res
 				.status(200)
-				.json(result ? " Utilisateur supprimé" : "Utilisateur Non Supprimé");
+				.json(result ? " Badge supprimé" : "Badge Non Supprimé");
 		} catch (error) {
 			return res.status(500).json(error);
 		}
