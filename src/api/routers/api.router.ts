@@ -13,7 +13,7 @@ export const apiRouter = Router()
 
 apiRouter.use('/api/v1', router)
 
-apiRouter.use('/api/v1/users', animationRouter)
+apiRouter.use('/api/v1/animations', animationRouter)
 apiRouter.use('/api/v1/badges', badgeRouter)
 apiRouter.use('/api/v1/parcours', parcoursRouter)
 apiRouter.use('/api/v1/points', pointRouter)

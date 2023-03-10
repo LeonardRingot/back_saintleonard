@@ -59,7 +59,6 @@ User.init(
 	{
 		sequelize,
 		modelName: "utilisateur",
-		timestamps: false,
 		freezeTableName: true,
 		defaultScope: {
 			attributes: { exclude: ["password"] },
