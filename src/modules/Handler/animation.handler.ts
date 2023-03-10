@@ -16,7 +16,7 @@ export class AnimationHandler {
      * @param res 
      * @returns 
      */
-	getUsers = async (req: Request, res: Response) => {
+	getAnimations = async (req: Request, res: Response) => {
 		try {
 			const result = await this.animationService.findAll();
 			if (result === null) return res.status(404).send();
@@ -33,7 +33,7 @@ export class AnimationHandler {
      * @param res 
      * @returns 
      */
-	getUserById = async (req: Request, res: Response) => {
+	getAnimationById = async (req: Request, res: Response) => {
 		try {
 			const result = await this.animationService.findById(parseInt(req.params.id));
 			if (result === null) {
@@ -51,7 +51,7 @@ export class AnimationHandler {
      * @param res 
      * @returns 
      */
-	createUser = async (req: Request, res: Response) => {
+	createAnimation = async (req: Request, res: Response) => {
 		try {
 			const result = await this.animationService.create(req.body);
 			return res.status(200).json(result);
@@ -66,7 +66,7 @@ export class AnimationHandler {
      * @param res 
      * @returns 
      */
-	updateUser = async (req: Request, res: Response) => {
+	updateAnimation = async (req: Request, res: Response) => {
 		try {
 			const result = await this.animationService.update(req.body, parseInt(req.params.id));
 			return res.status(200).json(result);
@@ -81,7 +81,7 @@ export class AnimationHandler {
      * @param res 
      * @returns 
      */
-	deleteUser = async (req: Request, res: Response) => {
+	deleteAnimation = async (req: Request, res: Response) => {
 		try {
 			const result = await this.animationService.delete(parseInt(req.params.id));
 			return res

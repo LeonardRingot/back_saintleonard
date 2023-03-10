@@ -1,32 +1,32 @@
 import { Router } from "express";
-import { userHandler } from "~/injection";
+import { simpleQuestionHandler } from "~/injection";
 
-export const userRouter = Router();
+export const simpleQuestionRouter = Router();
 
 /**
  * @swagger
  * tags:
- *      name: User
- *      description: Gestion des routes dédié aux utilisateurs
+ *      name: SimpleQuestion
+ *      description: Gestion des routes dédié aux Questions Simples
  */
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/simple_questions:
  *      get:
- *          tags: [User]
- *          description: liste des utilisateurs
+ *          tags: [SimpleQuestion]
+ *          description: liste des Questions Simples
  *          responses:
  *              200:
  *                  description: la requète s'est bien déroulée.
  */
-userRouter.get("/", userHandler.getUsers);
+simpleQuestionRouter.get("/", simpleQuestionHandler.getSimpleQuestions);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/simplequestions/{id}:
  *  get:
- *      tags: [User]
+ *      tags: [SimpleQuestion]
  *      description: Trouver un utilisateur par son Id
  *      parameters:
  *       - name: id
@@ -38,13 +38,13 @@ userRouter.get("/", userHandler.getUsers);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.get("/:id", userHandler.getUserById);
+simpleQuestionRouter.get("/:id", simpleQuestionHandler.getSimpleQuestionById);
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/simplequestions:
  *  post:
- *      tags: [User]
+ *      tags: [SimpleQuestion]
  *      description: Crée un utilisateur
  *      consumes:
  *       - application/json
@@ -53,18 +53,18 @@ userRouter.get("/:id", userHandler.getUserById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.post("/", userHandler.createUser);
+simpleQuestionRouter.post("/", simpleQuestionHandler.createSimpleQuestion);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/simplequestions/{id}:
  *  put:
- *      tags: [User]
+ *      tags: [SimpleQuestion]
  *      description: Modifier un utilisateur
  *      consumes:
  *       - application/json
@@ -78,18 +78,18 @@ userRouter.post("/", userHandler.createUser);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.put("/:id", userHandler.updateUser);
+simpleQuestionRouter.put("/:id", simpleQuestionHandler.updateSimpleQuestion);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/simplequestions/{id}:
  *  delete:
- *      tags: [User]
+ *      tags: [SimpleQuestion]
  *      description: Supprimer un utilisateur
  *      parameters:
  *       - name: id
@@ -100,4 +100,4 @@ userRouter.put("/:id", userHandler.updateUser);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.delete("/:id", userHandler.deleteUser);
+simpleQuestionRouter.delete("/:id", simpleQuestionHandler.deleteSimpleQuestion);

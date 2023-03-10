@@ -16,7 +16,7 @@ export class TokenHandler {
      * @param res 
      * @returns 
      */
-	getUsers = async (req: Request, res: Response) => {
+	getTokens = async (req: Request, res: Response) => {
 		try {
 			const result = await this.tokenService.findAll();
 			if (result === null) return res.status(404).send();
@@ -33,7 +33,7 @@ export class TokenHandler {
      * @param res 
      * @returns 
      */
-	getUserById = async (req: Request, res: Response) => {
+	getTokenById = async (req: Request, res: Response) => {
 		try {
 			const result = await this.tokenService.findById(parseInt(req.params.id));
 			if (result === null) {
@@ -51,7 +51,7 @@ export class TokenHandler {
      * @param res 
      * @returns 
      */
-	createUser = async (req: Request, res: Response) => {
+	createToken = async (req: Request, res: Response) => {
 		try {
 			const result = await this.tokenService.create(req.body);
 			return res.status(200).json(result);
@@ -66,7 +66,7 @@ export class TokenHandler {
      * @param res 
      * @returns 
      */
-	updateUser = async (req: Request, res: Response) => {
+	updateToken = async (req: Request, res: Response) => {
 		try {
 			const result = await this.tokenService.update(req.body, parseInt(req.params.id));
 			return res.status(200).json(result);
@@ -81,7 +81,7 @@ export class TokenHandler {
      * @param res 
      * @returns 
      */
-	deleteUser = async (req: Request, res: Response) => {
+	deleteToken = async (req: Request, res: Response) => {
 		try {
 			const result = await this.tokenService.delete(parseInt(req.params.id));
 			return res

@@ -1,33 +1,33 @@
 import { Router } from "express";
-import { userHandler } from "~/injection";
+import { qcmHandler } from "~/injection";
 
-export const userRouter = Router();
+export const qcmRouter = Router();
 
 /**
  * @swagger
  * tags:
- *      name: User
- *      description: Gestion des routes dédié aux utilisateurs
+ *      name: QCM
+ *      description: Gestion des routes dédié aux QCM
  */
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/qcms:
  *      get:
- *          tags: [User]
- *          description: liste des utilisateurs
+ *          tags: [QCM]
+ *          description: liste des QCM
  *          responses:
  *              200:
  *                  description: la requète s'est bien déroulée.
  */
-userRouter.get("/", userHandler.getUsers);
+qcmRouter.get("/", qcmHandler.getQcms);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/qcms/{id}:
  *  get:
- *      tags: [User]
- *      description: Trouver un utilisateur par son Id
+ *      tags: [QCM]
+ *      description: Trouver un QCM par son Id
  *      parameters:
  *       - name: id
  *         in: path
@@ -38,14 +38,14 @@ userRouter.get("/", userHandler.getUsers);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.get("/:id", userHandler.getUserById);
+qcmRouter.get("/:id", qcmHandler.getQcmById);
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/qcms:
  *  post:
- *      tags: [User]
- *      description: Crée un utilisateur
+ *      tags: [QCM]
+ *      description: Crée un QCM
  *      consumes:
  *       - application/json
  *      parameters:
@@ -53,19 +53,19 @@ userRouter.get("/:id", userHandler.getUserById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.post("/", userHandler.createUser);
+qcmRouter.post("/", qcmHandler.createQcm);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/qcms/{id}:
  *  put:
- *      tags: [User]
- *      description: Modifier un utilisateur
+ *      tags: [QCM]
+ *      description: Modifier un QCM
  *      consumes:
  *       - application/json
  *      parameters:
@@ -78,19 +78,19 @@ userRouter.post("/", userHandler.createUser);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.put("/:id", userHandler.updateUser);
+qcmRouter.put("/:id", qcmHandler.updateQcm);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/qcms/{id}:
  *  delete:
- *      tags: [User]
- *      description: Supprimer un utilisateur
+ *      tags: [QCM]
+ *      description: Supprimer un QCM
  *      parameters:
  *       - name: id
  *         in: path
@@ -100,4 +100,4 @@ userRouter.put("/:id", userHandler.updateUser);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.delete("/:id", userHandler.deleteUser);
+qcmRouter.delete("/:id", qcmHandler.deleteQcm);

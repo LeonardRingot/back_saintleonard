@@ -1,31 +1,31 @@
 CREATE TABLE utilisateur(
-    id_pseudo INT,
+    id_pseudo SERIAL,
     pseudo VARCHAR(50),
-    password VARCHAR(50),
-    email VARCHAR(50),
-    age VARCHAR(50),
-    createdAt VARCHAR(50),
-    updatedAt VARCHAR(50),
+    password VARCHAR(255),
+    email VARCHAR(100),
+    age VARCHAR(10),
+    createdAt TIMESTAMP,
+    updatedAt TIMESTAMP,
     is_admin BOOLEAN,
     PRIMARY KEY(id_pseudo)
 );
 
 CREATE TABLE token(
-    id_token INT,
-    refresh_token VARCHAR(50),
+    id_token SERIAL,
+    refresh_token VARCHAR(255),
     id_pseudo INT NOT NULL,
     PRIMARY KEY(id_token),
     FOREIGN KEY(id_pseudo) REFERENCES utilisateur(id_pseudo)
 );
 
 CREATE TABLE parcours(
-    id_parcours INT,
+    id_parcours SERIAL,
     name VARCHAR(50),
     PRIMARY KEY(id_parcours)
 );
 
 CREATE TABLE points(
-    id_point INT,
+    id_point SERIAL,
     name VARCHAR(50),
     main_description TEXT,
     small_description VARCHAR(255),
@@ -36,9 +36,9 @@ CREATE TABLE points(
 );
 
 CREATE TABLE badge(
-    id_badge INT,
+    id_badge SERIAL,
     name VARCHAR(50),
-    image VARCHAR(50),
+    image VARCHAR(255),
     id_point INT NOT NULL,
     PRIMARY KEY(id_badge),
     UNIQUE(id_point),
@@ -46,26 +46,26 @@ CREATE TABLE badge(
 );
 
 CREATE TABLE simple_question(
-    id_simple_question INT,
-    question VARCHAR(50),
+    id_simple_question SERIAL,
+    question VARCHAR(255),
     response VARCHAR(255),
     PRIMARY KEY(id_simple_question)
 );
 
 CREATE TABLE qcm(
-    id_qcm INT,
-    question VARCHAR(50),
-    correct_response VARCHAR(255),
-    optionA VARCHAR(50),
-    optionB VARCHAR(50),
-    optionC VARCHAR(50),
-    optionD VARCHAR(50),
+    id_qcm SERIAL,
+    question VARCHAR(255),
+    correct_response VARCHAR(10),
+    optionA VARCHAR(100),
+    optionB VARCHAR(100),
+    optionC VARCHAR(100),
+    optionD VARCHAR(100),
     PRIMARY KEY(id_qcm)
 );
 
 CREATE TABLE animation(
-    id_animation INT,
-    name VARCHAR(50),
+    id_animation SERIAL,
+    name VARCHAR(100),
     id_point INT NOT NULL,
     PRIMARY KEY(id_animation),
     FOREIGN KEY(id_point) REFERENCES points(id_point)

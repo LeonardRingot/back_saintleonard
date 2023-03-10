@@ -1,33 +1,33 @@
 import { Router } from "express";
-import { userHandler } from "~/injection";
+import { parcoursHandler } from "~/injection";
 
-export const userRouter = Router();
+export const parcoursRouter = Router();
 
 /**
  * @swagger
  * tags:
- *      name: User
- *      description: Gestion des routes dédié aux utilisateurs
+ *      name: Parcours
+ *      description: Gestion des routes dédié aux parcours
  */
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/parcours:
  *      get:
- *          tags: [User]
- *          description: liste des utilisateurs
+ *          tags: [Parcours]
+ *          description: liste des parcours
  *          responses:
  *              200:
  *                  description: la requète s'est bien déroulée.
  */
-userRouter.get("/", userHandler.getUsers);
+parcoursRouter.get("/", parcoursHandler.getParcours);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/parcours/{id}:
  *  get:
- *      tags: [User]
- *      description: Trouver un utilisateur par son Id
+ *      tags: [Parcours]
+ *      description: Trouver un parcours par son Id
  *      parameters:
  *       - name: id
  *         in: path
@@ -38,14 +38,14 @@ userRouter.get("/", userHandler.getUsers);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.get("/:id", userHandler.getUserById);
+parcoursRouter.get("/:id", parcoursHandler.getParcoursById);
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/parcours:
  *  post:
- *      tags: [User]
- *      description: Crée un utilisateur
+ *      tags: [Parcours]
+ *      description: Crée un parcours
  *      consumes:
  *       - application/json
  *      parameters:
@@ -53,19 +53,19 @@ userRouter.get("/:id", userHandler.getUserById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.post("/", userHandler.createUser);
+parcoursRouter.post("/", parcoursHandler.createParcours);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/parcours/{id}:
  *  put:
- *      tags: [User]
- *      description: Modifier un utilisateur
+ *      tags: [Parcours]
+ *      description: Modifier un parcours
  *      consumes:
  *       - application/json
  *      parameters:
@@ -78,19 +78,19 @@ userRouter.post("/", userHandler.createUser);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.put("/:id", userHandler.updateUser);
+parcoursRouter.put("/:id", parcoursHandler.updateParcours);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/parcours/{id}:
  *  delete:
- *      tags: [User]
- *      description: Supprimer un utilisateur
+ *      tags: [Parcours]
+ *      description: Supprimer un parcours
  *      parameters:
  *       - name: id
  *         in: path
@@ -100,4 +100,4 @@ userRouter.put("/:id", userHandler.updateUser);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.delete("/:id", userHandler.deleteUser);
+parcoursRouter.delete("/:id", parcoursHandler.deleteParcours);

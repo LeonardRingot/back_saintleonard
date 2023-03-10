@@ -41,7 +41,7 @@ User.init(
             },
         },
 		age: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING,
 		},
 		
 		email: {

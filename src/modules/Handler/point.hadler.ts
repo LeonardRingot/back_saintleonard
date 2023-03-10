@@ -16,7 +16,7 @@ export class PointHandler {
      * @param res 
      * @returns 
      */
-	getUsers = async (req: Request, res: Response) => {
+	getPoints = async (req: Request, res: Response) => {
 		try {
 			const result = await this.PointService.findAll();
 			if (result === null) return res.status(404).send();
@@ -33,7 +33,7 @@ export class PointHandler {
      * @param res 
      * @returns 
      */
-	getUserById = async (req: Request, res: Response) => {
+	getPointById = async (req: Request, res: Response) => {
 		try {
 			const result = await this.PointService.findById(parseInt(req.params.id));
 			if (result === null) {
@@ -51,7 +51,7 @@ export class PointHandler {
      * @param res 
      * @returns 
      */
-	createUser = async (req: Request, res: Response) => {
+	createPoint = async (req: Request, res: Response) => {
 		try {
 			const result = await this.PointService.create(req.body);
 			return res.status(200).json(result);
@@ -66,7 +66,7 @@ export class PointHandler {
      * @param res 
      * @returns 
      */
-	updateUser = async (req: Request, res: Response) => {
+	updatePoint = async (req: Request, res: Response) => {
 		try {
 			const result = await this.PointService.update(req.body, parseInt(req.params.id));
 			return res.status(200).json(result);
@@ -81,7 +81,7 @@ export class PointHandler {
      * @param res 
      * @returns 
      */
-	deleteUser = async (req: Request, res: Response) => {
+	deletePoint = async (req: Request, res: Response) => {
 		try {
 			const result = await this.PointService.delete(parseInt(req.params.id));
 			return res

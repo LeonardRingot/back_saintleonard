@@ -1,33 +1,33 @@
 import { Router } from "express";
-import { userHandler } from "~/injection";
+import { animationHandler } from "~/injection";
 
-export const userRouter = Router();
+export const animationRouter = Router();
 
 /**
  * @swagger
  * tags:
- *      name: User
- *      description: Gestion des routes dédié aux utilisateurs
+ *      name: Animation
+ *      description: Gestion des routes dédié aux animations
  */
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/animations:
  *      get:
- *          tags: [User]
- *          description: liste des utilisateurs
+ *          tags: [Animation]
+ *          description: liste des animations
  *          responses:
  *              200:
  *                  description: la requète s'est bien déroulée.
  */
-userRouter.get("/", userHandler.getUsers);
+animationRouter.get("/", animationHandler.getAnimations);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/animations/{id}:
  *  get:
- *      tags: [User]
- *      description: Trouver un utilisateur par son Id
+ *      tags: [Animation]
+ *      description: Trouver un animation par son Id
  *      parameters:
  *       - name: id
  *         in: path
@@ -38,14 +38,14 @@ userRouter.get("/", userHandler.getUsers);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.get("/:id", userHandler.getUserById);
+animationRouter.get("/:id", animationHandler.getAnimationById);
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/animations:
  *  post:
- *      tags: [User]
- *      description: Crée un utilisateur
+ *      tags: [Animation]
+ *      description: Crée un animation
  *      consumes:
  *       - application/json
  *      parameters:
@@ -53,19 +53,19 @@ userRouter.get("/:id", userHandler.getUserById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.post("/", userHandler.createUser);
+animationRouter.post("/", animationHandler.createAnimation);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/animations/{id}:
  *  put:
- *      tags: [User]
- *      description: Modifier un utilisateur
+ *      tags: [Animation]
+ *      description: Modifier un animation
  *      consumes:
  *       - application/json
  *      parameters:
@@ -78,19 +78,19 @@ userRouter.post("/", userHandler.createUser);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.put("/:id", userHandler.updateUser);
+animationRouter.put("/:id", animationHandler.updateAnimation);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/animations/{id}:
  *  delete:
- *      tags: [User]
- *      description: Supprimer un utilisateur
+ *      tags: [Animation]
+ *      description: Supprimer un animation
  *      parameters:
  *       - name: id
  *         in: path
@@ -100,4 +100,4 @@ userRouter.put("/:id", userHandler.updateUser);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.delete("/:id", userHandler.deleteUser);
+animationRouter.delete("/:id", animationHandler.deleteAnimation);

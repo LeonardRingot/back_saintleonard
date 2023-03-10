@@ -16,7 +16,7 @@ export class SimpleQuestionHandler {
      * @param res 
      * @returns 
      */
-	getUsers = async (req: Request, res: Response) => {
+	getSimpleQuestions = async (req: Request, res: Response) => {
 		try {
 			const result = await this.simpleQuestionService.findAll();
 			if (result === null) return res.status(404).send();
@@ -33,7 +33,7 @@ export class SimpleQuestionHandler {
      * @param res 
      * @returns 
      */
-	getUserById = async (req: Request, res: Response) => {
+	getSimpleQuestionById = async (req: Request, res: Response) => {
 		try {
 			const result = await this.simpleQuestionService.findById(parseInt(req.params.id));
 			if (result === null) {
@@ -51,7 +51,7 @@ export class SimpleQuestionHandler {
      * @param res 
      * @returns 
      */
-	createUser = async (req: Request, res: Response) => {
+	createSimpleQuestion = async (req: Request, res: Response) => {
 		try {
 
 			const result = await this.simpleQuestionService.create(req.body);
@@ -67,7 +67,7 @@ export class SimpleQuestionHandler {
      * @param res 
      * @returns 
      */
-	updateUser = async (req: Request, res: Response) => {
+	updateSimpleQuestion = async (req: Request, res: Response) => {
 		try {
 			const result = await this.simpleQuestionService.update(req.body, parseInt(req.params.id));
 			return res.status(200).json(result);
@@ -82,7 +82,7 @@ export class SimpleQuestionHandler {
      * @param res 
      * @returns 
      */
-	deleteUser = async (req: Request, res: Response) => {
+	deleteSimpleQuestion = async (req: Request, res: Response) => {
 		try {
 			const result = await this.simpleQuestionService.delete(parseInt(req.params.id));
 			return res

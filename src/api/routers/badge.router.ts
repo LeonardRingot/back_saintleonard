@@ -1,33 +1,33 @@
 import { Router } from "express";
-import { userHandler } from "~/injection";
+import { badgeHandler } from "~/injection";
 
-export const userRouter = Router();
+export const badgeRouter = Router();
 
 /**
  * @swagger
  * tags:
- *      name: User
- *      description: Gestion des routes dédié aux utilisateurs
+ *      name: Badge
+ *      description: Gestion des routes dédié aux badges
  */
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/badges:
  *      get:
- *          tags: [User]
- *          description: liste des utilisateurs
+ *          tags: [Badge]
+ *          description: liste des badges
  *          responses:
  *              200:
  *                  description: la requète s'est bien déroulée.
  */
-userRouter.get("/", userHandler.getUsers);
+badgeRouter.get("/", badgeHandler.getBadges);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/badges/{id}:
  *  get:
- *      tags: [User]
- *      description: Trouver un utilisateur par son Id
+ *      tags: [Badge]
+ *      description: Trouver un badge par son Id
  *      parameters:
  *       - name: id
  *         in: path
@@ -38,14 +38,14 @@ userRouter.get("/", userHandler.getUsers);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.get("/:id", userHandler.getUserById);
+badgeRouter.get("/:id", badgeHandler.getBadgeById);
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/badges:
  *  post:
- *      tags: [User]
- *      description: Crée un utilisateur
+ *      tags: [Badge]
+ *      description: Crée un badge
  *      consumes:
  *       - application/json
  *      parameters:
@@ -53,19 +53,19 @@ userRouter.get("/:id", userHandler.getUserById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.post("/", userHandler.createUser);
+badgeRouter.post("/", badgeHandler.createBadge);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/badges/{id}:
  *  put:
- *      tags: [User]
- *      description: Modifier un utilisateur
+ *      tags: [Badge]
+ *      description: Modifier un badge
  *      consumes:
  *       - application/json
  *      parameters:
@@ -78,19 +78,19 @@ userRouter.post("/", userHandler.createUser);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"firstname": "Fabrice",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.put("/:id", userHandler.updateUser);
+badgeRouter.put("/:id", badgeHandler.updateBadge);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/badges/{id}:
  *  delete:
- *      tags: [User]
- *      description: Supprimer un utilisateur
+ *      tags: [Badge]
+ *      description: Supprimer un badge
  *      parameters:
  *       - name: id
  *         in: path
@@ -100,4 +100,4 @@ userRouter.put("/:id", userHandler.updateUser);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.delete("/:id", userHandler.deleteUser);
+badgeRouter.delete("/:id", badgeHandler.deleteBadge);

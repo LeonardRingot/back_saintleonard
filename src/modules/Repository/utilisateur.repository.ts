@@ -47,7 +47,7 @@ export class UserRepository implements IRepository<UserDto> {
 	 * @param user
 	 */
 	async update(user: User, id: number): Promise<boolean | number> {
-		return User.update(user, { where: { id_td_user: id } }).then(
+		return User.update(user, { where: { id_pseudo: id } }).then(
 			(data: Array<boolean | number>) => {
 				return data[0];
 			}
@@ -59,7 +59,7 @@ export class UserRepository implements IRepository<UserDto> {
 	 * @param id
 	 */
 	async delete(id: number): Promise<boolean | number> {
-		return User.destroy({ where: { id_td_user: id } }).then(
+		return User.destroy({ where: { id_pseudo: id } }).then(
 			(data: boolean | number) => {
 				return data;
 			}

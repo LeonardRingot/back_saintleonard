@@ -16,7 +16,7 @@ export class QcmHandler {
      * @param res 
      * @returns 
      */
-	getUsers = async (req: Request, res: Response) => {
+	getQcms = async (req: Request, res: Response) => {
 		try {
 			const result = await this.qcmService.findAll();
 			if (result === null) return res.status(404).send();
@@ -33,7 +33,7 @@ export class QcmHandler {
      * @param res 
      * @returns 
      */
-	getUserById = async (req: Request, res: Response) => {
+	getQcmById = async (req: Request, res: Response) => {
 		try {
 			const result = await this.qcmService.findById(parseInt(req.params.id));
 			if (result === null) {
@@ -51,7 +51,7 @@ export class QcmHandler {
      * @param res 
      * @returns 
      */
-	createUser = async (req: Request, res: Response) => {
+	createQcm = async (req: Request, res: Response) => {
 		try {
 			const result = await this.qcmService.create(req.body);
 			return res.status(200).json(result);
@@ -66,7 +66,7 @@ export class QcmHandler {
      * @param res 
      * @returns 
      */
-	updateUser = async (req: Request, res: Response) => {
+	updateQcm = async (req: Request, res: Response) => {
 		try {
 			const result = await this.qcmService.update(req.body, parseInt(req.params.id));
 			return res.status(200).json(result);
@@ -81,7 +81,7 @@ export class QcmHandler {
      * @param res 
      * @returns 
      */
-	deleteUser = async (req: Request, res: Response) => {
+	deleteQcm = async (req: Request, res: Response) => {
 		try {
 			const result = await this.qcmService.delete(parseInt(req.params.id));
 			return res

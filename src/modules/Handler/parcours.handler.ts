@@ -16,7 +16,7 @@ export class ParcoursHandler {
      * @param res 
      * @returns 
      */
-	getUsers = async (req: Request, res: Response) => {
+	getParcours = async (req: Request, res: Response) => {
 		try {
 			const result = await this.parcoursService.findAll();
 			if (result === null) return res.status(404).send();
@@ -33,7 +33,7 @@ export class ParcoursHandler {
      * @param res 
      * @returns 
      */
-	getUserById = async (req: Request, res: Response) => {
+	getParcoursById = async (req: Request, res: Response) => {
 		try {
 			const result = await this.parcoursService.findById(parseInt(req.params.id));
 			if (result === null) {
@@ -51,7 +51,7 @@ export class ParcoursHandler {
      * @param res 
      * @returns 
      */
-	createUser = async (req: Request, res: Response) => {
+	createParcours = async (req: Request, res: Response) => {
 		try {
 			const result = await this.parcoursService.create(req.body);
 			return res.status(200).json(result);
@@ -66,7 +66,7 @@ export class ParcoursHandler {
      * @param res 
      * @returns 
      */
-	updateUser = async (req: Request, res: Response) => {
+	updateParcours = async (req: Request, res: Response) => {
 		try {
 			const result = await this.parcoursService.update(req.body, parseInt(req.params.id));
 			return res.status(200).json(result);
@@ -81,7 +81,7 @@ export class ParcoursHandler {
      * @param res 
      * @returns 
      */
-	deleteUser = async (req: Request, res: Response) => {
+	deleteParcours = async (req: Request, res: Response) => {
 		try {
 			const result = await this.parcoursService.delete(parseInt(req.params.id));
 			return res

@@ -1,33 +1,33 @@
 import { Router } from "express";
-import { userHandler } from "~/injection";
+import { tokenHandler } from "~/injection";
 
-export const userRouter = Router();
+export const tokenRouter = Router();
 
 /**
  * @swagger
  * tags:
- *      name: User
- *      description: Gestion des routes dédié aux utilisateurs
+ *      name: Token
+ *      description: Gestion des routes dédié aux tokens
  */
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/tokens:
  *      get:
- *          tags: [User]
- *          description: liste des utilisateurs
+ *          tags: [Token]
+ *          description: liste des tokens
  *          responses:
  *              200:
  *                  description: la requète s'est bien déroulée.
  */
-userRouter.get("/", userHandler.getUsers);
+tokenRouter.get("/", tokenHandler.getTokens);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/tokens/{id}:
  *  get:
- *      tags: [User]
- *      description: Trouver un utilisateur par son Id
+ *      tags: [Token]
+ *      description: Trouver un token par son Id
  *      parameters:
  *       - name: id
  *         in: path
@@ -38,14 +38,14 @@ userRouter.get("/", userHandler.getUsers);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.get("/:id", userHandler.getUserById);
+tokenRouter.get("/:id", tokenHandler.getTokenById);
 
 /**
  * @openapi
- * /api/v1/users:
+ * /api/v1/tokens:
  *  post:
- *      tags: [User]
- *      description: Crée un utilisateur
+ *      tags: [Token]
+ *      description: Crée un token
  *      consumes:
  *       - application/json
  *      parameters:
@@ -53,19 +53,19 @@ userRouter.get("/:id", userHandler.getUserById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"refresh_token": "fnfijfnpgaetogdfbf5fg,gkflg6"}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.post("/", userHandler.createUser);
+tokenRouter.post("/", tokenHandler.createToken);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/tokens/{id}:
  *  put:
- *      tags: [User]
- *      description: Modifier un utilisateur
+ *      tags: [Token]
+ *      description: Modifier un token
  *      consumes:
  *       - application/json
  *      parameters:
@@ -78,19 +78,19 @@ userRouter.post("/", userHandler.createUser);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"refresh_token": "fnfijfnpgaetogdfbf5fg,gkflg6"}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.put("/:id", userHandler.updateUser);
+tokenRouter.put("/:id", tokenHandler.updateToken);
 
 /**
  * @openapi
- * /api/v1/users/{id}:
+ * /api/v1/tokens/{id}:
  *  delete:
- *      tags: [User]
- *      description: Supprimer un utilisateur
+ *      tags: [Token]
+ *      description: Supprimer un token
  *      parameters:
  *       - name: id
  *         in: path
@@ -100,4 +100,4 @@ userRouter.put("/:id", userHandler.updateUser);
  *        200:
  *          description: La requête s'est bien déroulée.
  */
-userRouter.delete("/:id", userHandler.deleteUser);
+tokenRouter.delete("/:id", tokenHandler.deleteToken);
