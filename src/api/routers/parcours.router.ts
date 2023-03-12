@@ -53,7 +53,7 @@ parcoursRouter.get("/:id", parcoursHandler.getParcoursById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"firstname": "Fabrice",}
+ *         default: {"name": "Le Parcours",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ parcoursRouter.post("/", parcoursHandler.createParcours);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"firstname": "Fabrice",}
+ *         default: {"name": "Le Parcours",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

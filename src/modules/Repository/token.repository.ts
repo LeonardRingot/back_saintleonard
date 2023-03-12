@@ -9,11 +9,11 @@ export class TokenRepository implements IRepository<TokenDto> {
 
 	/**
 	 *
-	 * @param id
+	 * @param id_token
 	 * @returns
 	 */
-	async findById(id: number): Promise<TokenDto | null> {
-		const result = await Token.findByPk(id);
+	async findById(id_token: number): Promise<TokenDto | null> {
+		const result = await Token.findByPk(id_token);
 		if (result === null) throw new NotFoundError("Token not found");
 		return TokenMapper.MapToDto(result);
 	}

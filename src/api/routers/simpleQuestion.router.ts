@@ -53,7 +53,7 @@ simpleQuestionRouter.get("/:id", simpleQuestionHandler.getSimpleQuestionById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"firstname": "Fabrice",}
+ *         default: {"question": "ou est la réponse a cette question?", "response": "ici"}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ simpleQuestionRouter.post("/", simpleQuestionHandler.createSimpleQuestion);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"firstname": "Fabrice",}
+ *         default: {"question": "ou est la réponse a cette question?", "response": "ici"}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

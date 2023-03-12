@@ -53,7 +53,7 @@ pointRouter.get("/:id", pointHandler.getPointById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"firstname": "Fabrice",}
+ *         default: {"name": "Le vieux chateau", "main_description": "un très long texte", "small_description": "petit texte", "lon": "50.689784", "lat": "1.62799437", "qrcode": "./qrcode.png"}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ pointRouter.post("/", pointHandler.createPoint);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"firstname": "Fabrice",}
+ *         default: {"name": "Le vieux chateau", "main_description": "un très long texte", "small_description": "petit texte", "lon": "50.689784", "lat": "1.62799437", "qrcode": "./qrcode.png"}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

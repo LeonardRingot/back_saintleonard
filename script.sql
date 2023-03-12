@@ -13,7 +13,7 @@ CREATE TABLE utilisateur(
 CREATE TABLE token(
     id_token SERIAL,
     refresh_token VARCHAR(255),
-    id_pseudo INT NOT NULL,
+    id_pseudo INT,
     PRIMARY KEY(id_token),
     FOREIGN KEY(id_pseudo) REFERENCES utilisateur(id_pseudo)
 );

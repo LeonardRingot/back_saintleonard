@@ -53,7 +53,7 @@ animationRouter.get("/:id", animationHandler.getAnimationById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"firstname": "Fabrice",}
+ *         default: {"name": "L'anim de ces morts", "id_point": 3 }
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ animationRouter.post("/", animationHandler.createAnimation);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"firstname": "Fabrice",}
+ *         default: {"name": "L'anim de ces morts", "id_point": 3 }
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

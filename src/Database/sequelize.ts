@@ -28,5 +28,4 @@ const sequelize = new Sequelize(
 		console.error(`Impossible de se connecter à la base de données ${error}`)
 	);
 
-
 export default sequelize;

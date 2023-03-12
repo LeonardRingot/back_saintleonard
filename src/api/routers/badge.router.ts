@@ -53,7 +53,7 @@ badgeRouter.get("/:id", badgeHandler.getBadgeById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"firstname": "Fabrice",}
+ *         default: {"name": "feuille", "image": "image.png", "id_point": 2}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ badgeRouter.post("/", badgeHandler.createBadge);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"firstname": "Fabrice",}
+ *         default: {"name": "feuille", "image": "image.png", "id_point": 2}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

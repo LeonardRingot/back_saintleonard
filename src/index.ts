@@ -6,6 +6,7 @@ import express from "express"
 import { apiRouter } from './api/routers/api.router'
 import unexpectedErrorMiddleware from './api/middlewares/error.global'
 import swaggerUi from 'swagger-ui-express';
+import { initDb, relations } from "./Database/relation";
 
 const swaggerJsDoc = require('swagger-jsdoc')
 const app = express()
@@ -22,6 +23,9 @@ app.use(unexpectedErrorMiddleware)
 app.listen(port, () => {
     console.log(`Serveur démarré sur le port ${port}...`)
 })
+
+relations()
+initDb()
 
 const swaggerOptions = {
     swaggerDefinition: {

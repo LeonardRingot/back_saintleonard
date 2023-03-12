@@ -53,7 +53,7 @@ qcmRouter.get("/:id", qcmHandler.getQcmById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"firstname": "Fabrice",}
+ *         default: {question: "Quel est la bonne réponse ?", correct_response: "d", optiona: "a", optionb: "b", optionc: "c", optiond: "La reponse D",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ qcmRouter.post("/", qcmHandler.createQcm);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"firstname": "Fabrice",}
+ *         default: {question: "Quel est la réponse ?", correct_response: "d", optiona: "a", optionb: "b", optionc: "c", optiond: "La reponse D",}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

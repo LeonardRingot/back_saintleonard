@@ -53,7 +53,7 @@ tokenRouter.get("/:id", tokenHandler.getTokenById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"refresh_token": "fnfijfnpgaetogdfbf5fg,gkflg6"}
+ *         default: {"refresh_token": "fnfijfnpgaetogdfbf5fg,gkflg6", "id_pseudo": 1 }
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ tokenRouter.post("/", tokenHandler.createToken);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"refresh_token": "fnfijfnpgaetogdfbf5fg,gkflg6"}
+ *         default: {"refresh_token": "fnfijfnpgaetogdfbf5fg,gkflg6", "id_pseudo": 1 }
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

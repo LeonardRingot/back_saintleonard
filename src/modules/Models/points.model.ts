@@ -35,15 +35,15 @@ Point.init(
 				notEmpty: { msg: concatRequiredMessage("Nom du point d'interet") },
 			},
 		},
-        small_decription: {
+        small_description: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notEmpty: { msg: concatRequiredMessage("petite description carte") },
             },
         },
-        main_decription: {
-            type: DataTypes.STRING,
+        main_description: {
+            type: DataTypes.TEXT,
             allowNull: false,
             validate: {
                 notEmpty: { msg: concatRequiredMessage("Description principale") },
