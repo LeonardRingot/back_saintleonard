@@ -69,7 +69,7 @@ export class AnimationHandler {
 	updateAnimation = async (req: Request, res: Response) => {
 		try {
 			const result = await this.animationService.update(req.body, parseInt(req.params.id));
-			return res.status(200).json(result);
+			return res.status(200).json(result ? " Animation Modifiée !" : "Animation Non Modifiée !");
 		} catch (error) {
 			return res.status(500).json(error);
 		}

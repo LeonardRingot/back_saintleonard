@@ -25,7 +25,7 @@ app.listen(port, () => {
 })
 
 relations()
-initDb()
+// initDb()
 
 const swaggerOptions = {
     swaggerDefinition: {

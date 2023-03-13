@@ -75,7 +75,7 @@ export class UserHandler {
 				req.body = { ...req.body, password: hashedPassword };
 			}
 			const result = await this.userService.update(req.body, parseInt(req.params.id));
-			return res.status(200).json(result);
+			return res.status(200).json(result ? "Utilisateur Modifié !" : "Utilisateur Non Modifié !");
 		} catch (error) {
 			return res.status(500).json(error);
 		}

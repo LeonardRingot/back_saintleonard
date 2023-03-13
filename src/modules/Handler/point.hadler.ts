@@ -69,7 +69,7 @@ export class PointHandler {
 	updatePoint = async (req: Request, res: Response) => {
 		try {
 			const result = await this.PointService.update(req.body, parseInt(req.params.id));
-			return res.status(200).json(result);
+			return res.status(200).json(result ? "Point Modifié !" : "Point Non Modifié !");
 		} catch (error) {
 			return res.status(500).json(error);
 		}

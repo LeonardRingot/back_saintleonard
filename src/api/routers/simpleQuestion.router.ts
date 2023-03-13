@@ -12,7 +12,7 @@ export const simpleQuestionRouter = Router();
 
 /**
  * @openapi
- * /api/v1/simple_questions:
+ * /api/v1/simplequestions:
  *      get:
  *          tags: [SimpleQuestion]
  *          description: liste des Questions Simples

@@ -70,7 +70,7 @@ export class SimpleQuestionHandler {
 	updateSimpleQuestion = async (req: Request, res: Response) => {
 		try {
 			const result = await this.simpleQuestionService.update(req.body, parseInt(req.params.id));
-			return res.status(200).json(result);
+			return res.status(200).json(result ? "Question simple Modifiée !" : "Question simple Non Modifiée !");
 		} catch (error) {
 			return res.status(500).json(error);
 		}

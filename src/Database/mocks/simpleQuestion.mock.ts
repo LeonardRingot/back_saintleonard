@@ -1,6 +1,6 @@
 export const simpleQuestion = [
     {
-        question: "Quel est la couleur du cheval blanc d'Denri IV ?",
+        question: "Quel est la couleur du cheval blanc de Henri IV ?",
         response: "blanc",
     },
     {

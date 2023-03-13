@@ -2,7 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../../Database/sequelize";
 
 export class Animation extends Model {
-	id_Animation: number;
+	id_animation: number;
 
 	name: string;
 
@@ -14,7 +14,7 @@ const concatRequiredMessage = (data: string) => {
 
 Animation.init(
 	{
-		id_Animation: {
+		id_animation: {
 			type: DataTypes.INTEGER,
 			autoIncrement: true,
 			primaryKey: true,
