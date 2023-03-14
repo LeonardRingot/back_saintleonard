@@ -50,10 +50,10 @@ Point.init(
             },
         },
 		lat: {
-			type: DataTypes.FLOAT(10,6),
+			type: DataTypes.DOUBLE,
 		},
 		lon: {
-			type: DataTypes.FLOAT(10,6),
+			type: DataTypes.DOUBLE,
 		},
         qrcode: {
             type: DataTypes.STRING,

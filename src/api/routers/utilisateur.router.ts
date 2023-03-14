@@ -53,7 +53,7 @@ userRouter.get("/:id", userHandler.getUserById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "is_admin": false }
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ userRouter.post("/", userHandler.createUser);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "createdat": Date now(), "is_admin": false }
+ *         default: {"pseudo": "Raph", "password": "pizza", "email": "raph@ninja.piz", "age": "15", "is_admin": false }
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
