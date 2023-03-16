@@ -1,10 +1,26 @@
-import { UserDto } from "../Dto/utilisateur.dto";
+import { FullUserDto, UserDto } from "../Dto/utilisateur.dto";
 import { User } from "../Models/utilisateur.model";
 import { UserMapper } from "../Mapper/utilisateur.mapper";
-import { IRepository } from "../core/repository.interface";
+import { IRepository, IRepositoryUser } from "../core/repository.interface";
 import { NotFoundError } from "../core/errors/errors";
 
-export class UserRepository implements IRepository<UserDto> {
+export class UserRepository implements IRepositoryUser<FullUserDto, UserDto> {
+	/**
+	 * 
+	 * @param pseudo 
+	 * @returns 
+	 */
+	async findByPseudo(pseudo: string): Promise<FullUserDto | null> {
+		const user = await User.scope('withPassword').findOne({
+				where: {
+					pseudo: pseudo
+				}
+			});
+			if (!user) {
+				return null;
+			}
+		return UserMapper.MapFullToDto(user);
+	}
 
 	/**
 	 *

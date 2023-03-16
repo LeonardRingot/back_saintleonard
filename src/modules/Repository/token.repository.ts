@@ -37,7 +37,7 @@ export class TokenRepository implements IRepository<TokenDto> {
 	 *
 	 * @param token
 	 */
-	async create(token: Partial<TokenDto>): Promise<TokenDto> {
+	async create(token: Partial<Token>): Promise<TokenDto> {
 		return Token.create(token).then((data: Token) => {
 			return TokenMapper.MapToDto(data);
 		});

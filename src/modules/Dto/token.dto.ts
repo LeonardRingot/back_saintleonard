@@ -1,3 +1,5 @@
 export interface TokenDto {
-	refreshToken: string;
+	refresh_token: string;
+
+	id_pseudo?: number;
 }

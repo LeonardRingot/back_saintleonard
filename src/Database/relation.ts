@@ -100,7 +100,7 @@ export const initDb = () => {
         token.map((token) => {
             Token.create({
                 userId: token.id_pseudo,
-                refresh_token: token.refreshToken
+                refresh_token: token.refresh_token
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 

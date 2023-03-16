@@ -1,4 +1,4 @@
-import { UserAuthDto, UserDto } from "../Dto/utilisateur.dto";
+import { FullUserDto, UserDto } from "../Dto/utilisateur.dto";
 import { User } from "../Models/utilisateur.model";
 
 export class UserMapper {
@@ -13,10 +13,10 @@ export class UserMapper {
 		return Dto;
 	}
 
-	static MapAuthToDto(user: User | null): UserAuthDto {
+	static MapFullToDto(user: User | null): FullUserDto {
 		if (user === null) return null as any;
 
-		const Dto: UserAuthDto = {
+		const Dto: FullUserDto = {
             id_pseudo: user.id_pseudo,
             pseudo: user.pseudo,
             age: user.age,
@@ -26,6 +26,5 @@ export class UserMapper {
         };
 		return Dto;
 	}
-	
 
 }

@@ -6,6 +6,7 @@ export class Token extends Model {
 
 	refresh_token: string;
 
+	id_pseudo!:number;
 }
 
 const concatRequiredMessage = (data: string) => {
@@ -25,6 +26,9 @@ Token.init(
 			validate: {
 				notEmpty: { msg: concatRequiredMessage("Refresh Token") },
 			},
+		},
+		id_pseudo: {
+			type: DataTypes.INTEGER,
 		}
 	},
 	{

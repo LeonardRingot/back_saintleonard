@@ -6,7 +6,7 @@ export interface UserDto {
 	email: string;
 }
 
-export interface UserAuthDto {
+export interface FullUserDto {
 	id_pseudo: number;
 	
 	pseudo: string;
@@ -18,4 +18,10 @@ export interface UserAuthDto {
 	email: string;
 
     is_admin: boolean;
-}	
+}
+
+export interface AuthUserDto {
+	pseudo: string;
+
+	password: string;
+}

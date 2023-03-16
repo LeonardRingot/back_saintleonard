@@ -6,8 +6,9 @@ export class TokenMapper {
 		if (token === null) return null as any;
 
 		const Dto: TokenDto = {
-            refreshToken: token.refresh_token
-        };
+			refresh_token: token.refresh_token,
+			id_pseudo: token.id_pseudo
+		};
 		return Dto;
 	}
 }
