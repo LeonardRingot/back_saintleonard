@@ -31,6 +31,7 @@ export class AuthentificationService implements AuthIService<AuthUserDto, TokenD
         this.tokenRepository = _tokenRepository;
         this.userRepository = _userRepository;
     }
+
     async login(credentials: AuthUserDto): Promise<any> {
         console.log("test service");
 
@@ -39,7 +40,6 @@ export class AuthentificationService implements AuthIService<AuthUserDto, TokenD
 
             // TODO 404
             if (!user) return 
-                console.log(user.password);
             if (!await bcrypt.compare(credentials.password, user.password)) {
                 throw new Error('Invalid credentials')
             }
@@ -61,6 +61,7 @@ export class AuthentificationService implements AuthIService<AuthUserDto, TokenD
             return { refreshToken , accessToken }
 
         } catch (err) {
+            console.log('service', err)
             throw err
         }
     }
@@ -74,7 +75,7 @@ export class AuthentificationService implements AuthIService<AuthUserDto, TokenD
                 refreshTokens.push(token.token)
             })
             if (!refreshTokens.includes(token.refresh_token)) throw new Error('Forbidden')
-            const decoded = jwt.verify(token.refresh_token!, process.env.REFRESH_TOKEN_SECRET!) as JwtPayload;
+            const decoded = jwt.verify(token.refresh_token, process.env.REFRESH_TOKEN_SECRET!) as JwtPayload;
             const user = await this.userRepository.findByPseudo(decoded.pseudo)
             if (!user) return
             const newAccessToken = AuthentificationService.generateAccessToken({ pseudo: user.pseudo, id: user.id_pseudo, isAdmin: user.is_admin });

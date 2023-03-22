@@ -1,7 +1,5 @@
 import { Router } from "express";
 import { authentificationHandler } from "~/injection";
-import { AuthentificationHandler } from "~/modules/Handler/Authentification.handler";
-
 
 export const authRouter = Router();
 

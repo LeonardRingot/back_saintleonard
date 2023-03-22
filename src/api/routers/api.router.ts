@@ -2,6 +2,7 @@ import { Router } from "express";
 import { animationRouter } from "./animation.router";
 import { authRouter } from "./Authentification.router";
 import { badgeRouter } from "./badge.router";
+import { googleAuthentificationRouter } from "./GoogleAuthentification.router";
 import { parcoursRouter } from "./parcours.router";
 import { pointRouter } from "./point.router";
 import { qcmRouter } from "./qcm.router";
@@ -12,6 +13,7 @@ import { userRouter } from "./utilisateur.router";
 export const apiRouter = Router()
 
 apiRouter.use('/api/v1/auth', authRouter)
+apiRouter.use('/api/v1/auth/google', googleAuthentificationRouter)
 
 apiRouter.use('/api/v1/animations', animationRouter)
 apiRouter.use('/api/v1/badges', badgeRouter)
