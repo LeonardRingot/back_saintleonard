@@ -10,7 +10,7 @@ export class GoogleAuthService {
             {
             clientID: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-            callbackURL: `${process.env.API_BASE_URL}/auth/google/callback`,
+            callbackURL: `${process.env.API_BASE_URL}/api/v1/auth/google/callback`,
             },
             async (accessToken: string,
                 refreshToken: string,
