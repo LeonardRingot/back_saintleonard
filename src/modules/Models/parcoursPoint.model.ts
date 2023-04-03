@@ -1,34 +1,33 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../../Database/sequelize";
+import { Parcours } from "./parcours.model";
 import { Point } from "./points.model";
 
-export class Animation extends Model {
-	id_animation: number;
 
-	name: string;
+export class ParcoursPoint extends Model {
+	id: number;
 
-	id_point: number;
+    parcourIdParcours!: number;
+
+    id_point!: number;
 }
 
-const concatRequiredMessage = (data: string) => {
-	return `Le champ ${data} est requis`;
-};
-
-Animation.init(
+ParcoursPoint.init(
 	{
-		id_animation: {
+		id: {
 			type: DataTypes.INTEGER,
 			autoIncrement: true,
 			primaryKey: true,
 		},
-		name: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			validate: {
-				notEmpty: { msg: concatRequiredMessage("Nom de l'animation") },
-			},
-		},
-		id_point: {
+		parcourIdParcours: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: Parcours,
+                key: 'id_parcours',
+            },
+        },
+        pointIdPoint: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -39,7 +38,7 @@ Animation.init(
 	},
 	{
 		sequelize,
-		modelName: "animation",
+		modelName: "parcourspoint",
 		timestamps: false,
 		freezeTableName: true,
 	}

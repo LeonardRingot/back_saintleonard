@@ -57,8 +57,8 @@ export class AuthentificationService implements AuthIService<AuthUserDto, TokenD
                 refresh_token: refreshToken,
                 id_pseudo: user.id_pseudo,
             })
-
-            return { refreshToken , accessToken }
+            const idPseudo = user.id_pseudo;
+            return { refreshToken , accessToken, idPseudo }
 
         } catch (err) {
             console.log('service', err)
