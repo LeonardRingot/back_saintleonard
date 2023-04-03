@@ -35,7 +35,6 @@ User.init(
 		},
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
             validate: {
                 notEmpty: { msg: concatRequiredMessage("Mot de passe") },
             },
