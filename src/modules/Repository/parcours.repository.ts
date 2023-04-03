@@ -3,6 +3,7 @@ import { NotFoundError } from "../core/errors/errors";
 import { ParcoursDto } from "../Dto/parcours.dto";
 import { Parcours } from "../Models/parcours.model";
 import { ParcoursMapper } from "../Mapper/parcours.mapper";
+import { Point } from "../Models/points.model";
 
 export class ParcoursRepository implements IRepository<ParcoursDto> {
 
@@ -12,7 +13,7 @@ export class ParcoursRepository implements IRepository<ParcoursDto> {
 	 * @returns
 	 */
 	async findById(id: number): Promise<ParcoursDto | null> {
-		const result = await Parcours.findByPk(id);
+		const result = await Parcours.findByPk(id, { include: Point});
 		if (result === null) throw new NotFoundError("Parcours not found");
 		return ParcoursMapper.MapToDto(result);
 	}
@@ -23,7 +24,7 @@ export class ParcoursRepository implements IRepository<ParcoursDto> {
 	 * @returns
 	 */
 	async findAll(filter: any): Promise<Array<ParcoursDto>> {
-		return Parcours.findAll({
+		return Parcours.findAll({ include: Point ,
 			where: filter,
 		}).then((data: Array<Parcours>) => {
 			return data.map((parcours: Parcours) => {

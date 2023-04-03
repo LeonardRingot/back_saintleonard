@@ -18,6 +18,8 @@ import { SimpleQuestion } from "~/modules/Models/simpleQuestion.model";
 import { Token } from "~/modules/Models/token.model";
 import { User } from "~/modules/Models/utilisateur.model";
 import sequelize from './sequelize'
+import { ParcoursPoint } from '~/modules/Models/parcoursPoint.model'
+import { parcourspoint } from './mocks/parcoursPoint.mock'
 
 export const relations = () => {
     User.hasMany(Token, { foreignKey: 'id_pseudo' })
@@ -29,25 +31,25 @@ export const relations = () => {
     Point.hasOne(Badge, { foreignKey: 'id_point' })
     Badge.belongsTo(Point, { foreignKey: 'id_point' })
 
-    User.belongsToMany(Point, { through: 'scanner' })
-    Point.belongsToMany(User, { through: 'scanner' })
+    User.belongsToMany(Badge, { through: 'userbadge' })
+    Badge.belongsToMany(User, { through: 'userbadge' })
 
-    User.belongsToMany(Badge, { through: 'obtenir' })
-    Badge.belongsToMany(User, { through: 'obtenir' })
+    Parcours.belongsToMany(Point, { through: 'parcourspoint' })
+    Point.belongsToMany(Parcours, { through: 'parcourspoint' })
 
-    Parcours.belongsToMany(Point, { through: 'associer' })
-    Point.belongsToMany(Parcours, { through: 'associer' })
+    Parcours.belongsToMany(Animation, { through: 'parcoursanimation' })
+    Animation.belongsToMany(Parcours, { through: 'parcoursanimation' })
 
-    Animation.belongsToMany(SimpleQuestion, { through: 'poser' })
-    SimpleQuestion.belongsToMany(Animation, { through: 'poser' })
+    Animation.belongsToMany(SimpleQuestion, { through: 'animationsq' })
+    SimpleQuestion.belongsToMany(Animation, { through: 'animationsq' })
 
-    Animation.belongsToMany(QCM, { through: 'detenir' })
-    QCM.belongsToMany(Animation, { through: 'detenir' })
+    Animation.belongsToMany(QCM, { through: 'animationqcm' })
+    QCM.belongsToMany(Animation, { through: 'animationqcm' })
 };
 
 export const initDb = () => {
     return sequelize.sync({ force: true }).then(() => {
-        point.map((point) => {
+        point.forEach((point) => {
             Point.create({
                 name: point.name,
                 main_description: point.main_description,
@@ -55,17 +57,34 @@ export const initDb = () => {
                 lon: point.lon,
                 lat: point.lat,
                 qrcode: point.qrcode,
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            })
         })
 
-        animation.map((animation) => {
+        parcours.forEach((parcours) => {
+            Parcours.create({
+                name: parcours.name
+            }).then((createdParcours) => {
+                console.log(createdParcours.toJSON());
+
+                parcourspoint.forEach((parcoursPoint) => {
+                    if (parcoursPoint.id_parcours === createdParcours.id_parcours) {
+                        ParcoursPoint.create({
+                            parcourIdParcours: parcoursPoint.id_parcours,
+                            pointIdPoint: parcoursPoint.id_point,
+                        }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
+                    }
+                });
+            });
+        })
+
+        animation.forEach((animation) => {
             Animation.create({
                 name: animation.name,
                 id_point: animation.id_point,
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 
-        badge.map((badge) => {
+        badge.forEach((badge) => {
             Badge.create({
                 name: badge.name,
                 image: badge.image,
@@ -73,13 +92,7 @@ export const initDb = () => {
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 
-        parcours.map((parcours) => {
-            Parcours.create({
-                name: parcours.name
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
-        })
-
-        qcm.map((qcm) => {
+        qcm.forEach((qcm) => {
             QCM.create({
                 question: qcm.question,
                 correct_response: qcm.correct_response,
@@ -90,21 +103,21 @@ export const initDb = () => {
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 
-        simpleQuestion.map((simpleQuestion) => {
+        simpleQuestion.forEach((simpleQuestion) => {
             SimpleQuestion.create({
                 question: simpleQuestion.question,
                 response: simpleQuestion.response
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 
-        token.map((token) => {
+        token.forEach((token) => {
             Token.create({
                 userId: token.id_pseudo,
                 refresh_token: token.refresh_token
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 
-        user.map((user) => {
+        user.forEach((user) => {
             User.create({
                 pseudo: user.pseudo,
                 password: user.password,
