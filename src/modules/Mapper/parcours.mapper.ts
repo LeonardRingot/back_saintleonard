@@ -11,6 +11,7 @@ export class ParcoursMapper {
 
 		const pointsData = points.map((point) => {
 			const pointDto: PointDto = {
+				id_point: point.id_point,
 				name: point.name,
 				smallDescription: point.small_description,
 				mainDescription: point.main_description,
@@ -22,9 +23,10 @@ export class ParcoursMapper {
 		});
 
 		const Dto: ParcoursDto = {
-        name: parcours.name,
-		points: pointsData,
-        };
+			id_parcours: parcours.id_parcours,
+			name: parcours.name,
+			points: pointsData,
+		};
 		return Dto;
 	}
 }

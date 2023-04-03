@@ -6,6 +6,7 @@ export class PointMapper {
 		if (point === null) return null as any;
 
 		const Dto: PointDto = {
+			id_point: point.id_point,
 			name: point.name,
 			smallDescription: point.small_description,
 			mainDescription: point.main_description,

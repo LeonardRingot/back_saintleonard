@@ -1,4 +1,6 @@
 export interface PointDto {
+	id_point: number;
+	
 	name: string;
 
 	smallDescription: string;
