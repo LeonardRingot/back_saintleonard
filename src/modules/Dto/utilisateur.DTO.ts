@@ -1,9 +1,14 @@
+import { BadgeDto } from "./badge.dto";
+
+
 export interface UserDto {
 	pseudo: string;
 
-    age: string;
+    birthdate: string;
 
 	email: string;
+
+	badges?: BadgeDto[];
 }
 
 export interface FullUserDto {
@@ -13,7 +18,7 @@ export interface FullUserDto {
 
 	password: string;
 
-    age: string;
+    birthdate: string;
 
 	email: string;
 

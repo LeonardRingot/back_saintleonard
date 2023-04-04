@@ -7,6 +7,7 @@ import { qcm } from './mocks/qcm.mock'
 import { simpleQuestion } from './mocks/simpleQuestion.mock'
 import { token } from './mocks/token.mock'
 import { user } from './mocks/utilisateur.mock'
+import { userbadge } from './mocks/userbadge.mock'
 
 // models
 import { Animation } from "~/modules/Models/animation.model";
@@ -20,6 +21,7 @@ import { User } from "~/modules/Models/utilisateur.model";
 import sequelize from './sequelize'
 import { ParcoursPoint } from '~/modules/Models/parcoursPoint.model'
 import { parcourspoint } from './mocks/parcoursPoint.mock'
+import { UserBadge } from '~/modules/Models/userBadge.model'
 
 export const relations = () => {
     User.hasMany(Token, { foreignKey: 'id_pseudo' })
@@ -59,7 +61,6 @@ export const initDb = () => {
                 qrcode: point.qrcode,
             })
         })
-
         parcours.forEach((parcours) => {
             Parcours.create({
                 name: parcours.name
@@ -122,8 +123,19 @@ export const initDb = () => {
                 pseudo: user.pseudo,
                 password: user.password,
                 email: user.email,
-                age: user.age,
-            })
+                birthdate: user.birthdate,
+            }).then((createdUser) => {
+                console.log(createdUser.toJSON());
+
+                userbadge.forEach((userBadge) => {
+                    if (userBadge.id_pseudo === createdUser.id_pseudo) {
+                        UserBadge.create({
+                            utilisateurIdPseudo: userBadge.id_pseudo,
+                            badgeIdBadge: userBadge.id_badge,
+                        }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
+                    }
+                });
+            });
         })
 
         console.log('Database successfully initialized.')
