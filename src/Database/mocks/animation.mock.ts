@@ -7,4 +7,8 @@ export const animation = [
         name: "QCM",
         id_point: 2,
     },
+    {
+        name: "mixte",
+        id_point: 2,
+    },
 ];
