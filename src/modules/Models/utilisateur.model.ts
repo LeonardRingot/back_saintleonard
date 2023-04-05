@@ -8,7 +8,7 @@ export class User extends Model {
 
     password: string;
 
-	age!: string;
+	birthdate!: string;
 
 	email!: string;
 
@@ -39,8 +39,8 @@ User.init(
                 notEmpty: { msg: concatRequiredMessage("Mot de passe") },
             },
         },
-		age: {
-			type: DataTypes.STRING,
+		birthdate: {
+			type: DataTypes.DATE,
 		},
 		
 		email: {

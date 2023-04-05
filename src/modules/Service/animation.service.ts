@@ -1,7 +1,7 @@
 import { IRepository } from "../core/repository.interface";
 import { IService } from "../core/service.interface";
 import { AnimationDto } from "../Dto/animation.dto";
-import { Animation } from "../Models/animation.model";
+
 
 export class AnimationService implements IService<AnimationDto> {
 	private animationRepository: IRepository<AnimationDto>;
@@ -38,7 +38,7 @@ export class AnimationService implements IService<AnimationDto> {
 	 * @param t
 	 * @returns
 	 */
-	async create(animation: Animation): Promise<AnimationDto | null> {
+	async create(animation: AnimationDto): Promise<AnimationDto | null> {
 		return this.animationRepository.create(animation).then((data) => {
 			return data;
 		});
@@ -49,7 +49,7 @@ export class AnimationService implements IService<AnimationDto> {
 	 * @param t
 	 * @returns
 	 */
-	async update(animation: Animation, id: number): Promise<boolean | number> {
+	async update(animation: AnimationDto, id: number): Promise<boolean | number> {
 		return this.animationRepository.update(animation, id).then((data) => {
 			return data;
 		});

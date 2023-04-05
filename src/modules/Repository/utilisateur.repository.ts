@@ -1,8 +1,9 @@
 import { FullUserDto, UserDto } from "../Dto/utilisateur.dto";
 import { User } from "../Models/utilisateur.model";
 import { UserMapper } from "../Mapper/utilisateur.mapper";
-import { IRepository, IRepositoryUser } from "../core/repository.interface";
+import { IRepositoryUser } from "../core/repository.interface";
 import { NotFoundError } from "../core/errors/errors";
+import { Badge } from "../Models/badge.model";
 
 export class UserRepository implements IRepositoryUser<FullUserDto, UserDto> {
 	/**
@@ -28,7 +29,7 @@ export class UserRepository implements IRepositoryUser<FullUserDto, UserDto> {
 	 * @returns
 	 */
 	async findById(id: number): Promise<UserDto | null> {
-		const result = await User.findByPk(id);
+		const result = await User.findByPk(id, { include: Badge});
 		if (result === null) throw new NotFoundError("User not found");
 		return UserMapper.MapToDto(result);
 	}
@@ -39,7 +40,7 @@ export class UserRepository implements IRepositoryUser<FullUserDto, UserDto> {
 	 * @returns
 	 */
 	async findAll(filter: any): Promise<Array<UserDto>> {
-		return User.findAll({
+		return User.findAll({ include: Badge,
 			where: filter,
 		}).then((data: Array<User>) => {
 			return data.map((user: User) => {
