@@ -3,8 +3,10 @@ import { BadgeDto } from "./badge.dto";
 
 export interface UserDto {
 	pseudo: string;
-
+	
     birthdate: string;
+	
+	age?: number;
 
 	email: string;
 

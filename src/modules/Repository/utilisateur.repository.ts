@@ -1,7 +1,7 @@
 import { FullUserDto, UserDto } from "../Dto/utilisateur.dto";
 import { User } from "../Models/utilisateur.model";
 import { UserMapper } from "../Mapper/utilisateur.mapper";
-import { IRepository, IRepositoryUser } from "../core/repository.interface";
+import { IRepositoryUser } from "../core/repository.interface";
 import { NotFoundError } from "../core/errors/errors";
 import { Badge } from "../Models/badge.model";
 

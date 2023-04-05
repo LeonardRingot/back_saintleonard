@@ -13,3 +13,9 @@ export interface PointDto {
 
 	QrCode: string;
 }
+
+export interface NamePointDto{
+	id_point: number;
+	
+	name: string;
+}

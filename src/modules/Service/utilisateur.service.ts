@@ -17,6 +17,14 @@ export class UserService implements IService<UserDto> {
 	 */
 	async findAll(options?: any): Promise<Array<UserDto> | null> {
 		return this.userRepository.findAll(options).then((data) => {
+			data.forEach((user) => {
+				const birthdateObj = new Date(user.birthdate);
+				const today = new Date();
+				const diff = today.getTime() - birthdateObj.getTime();
+				const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+				console.log(`âge de ${user.pseudo}: ${age} ans`)
+				user.age = age;
+			});
 			return data;
 		});
 	}

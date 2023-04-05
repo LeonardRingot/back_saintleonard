@@ -22,6 +22,10 @@ import sequelize from './sequelize'
 import { ParcoursPoint } from '~/modules/Models/parcoursPoint.model'
 import { parcourspoint } from './mocks/parcoursPoint.mock'
 import { UserBadge } from '~/modules/Models/userBadge.model'
+import { animationqcm } from './mocks/animationqcm.mock'
+import { AnimationQcm } from '~/modules/Models/animationqcm.model'
+import { animationsq } from './mocks/animationsq.mock'
+import { AnimationSq } from '~/modules/Models/animationsq.model'
 
 export const relations = () => {
     User.hasMany(Token, { foreignKey: 'id_pseudo' })
@@ -61,6 +65,7 @@ export const initDb = () => {
                 qrcode: point.qrcode,
             })
         })
+
         parcours.forEach((parcours) => {
             Parcours.create({
                 name: parcours.name
@@ -82,7 +87,27 @@ export const initDb = () => {
             Animation.create({
                 name: animation.name,
                 id_point: animation.id_point,
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
+            }).then((createdAnimation) => {
+                console.log(createdAnimation.toJSON());
+
+                animationqcm.forEach((animQcm) => {
+                    if(animQcm.id_animation === createdAnimation.id_animation) {
+                        AnimationQcm.create({
+                            animationIdAnimation: animQcm.id_animation,
+                            qcmIdQcm: animQcm.id_qcm
+                        }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
+                    }
+                });
+
+                animationsq.forEach((animSq) => {
+                    if(animSq.id_animation === createdAnimation.id_animation) {
+                        AnimationSq.create({
+                            animationIdAnimation: animSq.id_animation,
+                            simpleQuestionIdSimpleQuestion: animSq.id_simple_question
+                        }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
+                    }
+                });
+            });
         })
 
         badge.forEach((badge) => {
