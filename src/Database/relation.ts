@@ -26,6 +26,8 @@ import { animationqcm } from './mocks/animationqcm.mock'
 import { AnimationQcm } from '~/modules/Models/animationqcm.model'
 import { animationsq } from './mocks/animationsq.mock'
 import { AnimationSq } from '~/modules/Models/animationsq.model'
+import { parcoursanimation } from './mocks/parcoursAnimation.mock'
+import { ParcoursAnimation } from '~/modules/Models/parcoursAnimation.model'
 
 export const relations = () => {
     User.hasMany(Token, { foreignKey: 'id_pseudo' })
@@ -65,23 +67,35 @@ export const initDb = () => {
                 qrcode: point.qrcode,
             })
         })
-
-        parcours.forEach((parcours) => {
-            Parcours.create({
-                name: parcours.name
-            }).then((createdParcours) => {
-                console.log(createdParcours.toJSON());
-
-                parcourspoint.forEach((parcoursPoint) => {
-                    if (parcoursPoint.id_parcours === createdParcours.id_parcours) {
-                        ParcoursPoint.create({
-                            parcourIdParcours: parcoursPoint.id_parcours,
-                            pointIdPoint: parcoursPoint.id_point,
-                        }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
-                    }
-                });
-            });
-        })
+        
+                parcours.forEach((parcours) => {
+                    Parcours.create({
+                        name: parcours.name
+                    }).then((createdParcours) => {
+                        console.log(createdParcours.toJSON());
+        
+                        parcourspoint.forEach((parcoursPoint) => {
+                            if (parcoursPoint.id_parcours === createdParcours.id_parcours) {
+                                ParcoursPoint.create({
+                                    parcourIdParcours: parcoursPoint.id_parcours,
+                                    pointIdPoint: parcoursPoint.id_point,
+                                }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
+                            }
+                        });
+        
+                        
+                        parcoursanimation.forEach((parcoursAnimation) => {
+                            if ( parcoursAnimation.id_parcours === createdParcours.id_parcours ) {
+                                ParcoursAnimation.create({
+                                    parcourIdParcours: parcoursAnimation.id_parcours,
+                                    animationIdAnimation: parcoursAnimation.id_animation,
+                                }).then((response: { toJSON: () => string }) =>
+                                    console.log(response.toJSON())
+                                );
+                            }
+                        });
+                    });
+                })
 
         animation.forEach((animation) => {
             Animation.create({

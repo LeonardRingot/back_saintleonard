@@ -1,18 +1,18 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../../Database/sequelize";
 import { Parcours } from "./parcours.model";
-import { Point } from "./points.model";
+import { Animation } from "./animation.model";
 
 
-export class ParcoursPoint extends Model {
+export class ParcoursAnimation extends Model {
     parcourIdParcours!: number;
 
-    pointIdPoint!: number;
+    animationIdAnimation!: number;
 
     positionParcours: number;
 }
 
-ParcoursPoint.init(
+ParcoursAnimation.init(
 	{
 		parcourIdParcours: {
             type: DataTypes.INTEGER,
@@ -23,13 +23,13 @@ ParcoursPoint.init(
                 key: 'id_parcours',
             },
         },
-        pointIdPoint: {
+        animationIdAnimation: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             references: {
-                model: Point,
-                key: 'id_point',
+                model: Animation,
+                key: 'id_animation',
             },
         },
         positionParcours: {
@@ -38,7 +38,7 @@ ParcoursPoint.init(
 	},
 	{
 		sequelize,
-		modelName: "parcourspoint",
+		modelName: "parcoursanimation",
 		timestamps: false,
 		freezeTableName: true,
 	}
