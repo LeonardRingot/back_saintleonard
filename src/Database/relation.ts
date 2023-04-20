@@ -33,11 +33,8 @@ export const relations = () => {
     User.hasMany(Token, { foreignKey: 'id_pseudo' })
     Token.belongsTo(User, { foreignKey: 'id_pseudo' })
 
-    Point.hasMany(Animation, { foreignKey: 'id_point' })
-    Animation.belongsTo(Point, { foreignKey: 'id_point' })
-
-    Point.hasOne(Badge, { foreignKey: 'id_point' })
-    Badge.belongsTo(Point, { foreignKey: 'id_point' })
+    Parcours.hasOne(Badge, { foreignKey: 'id_parcours' })
+    Badge.belongsTo(Parcours, { foreignKey: 'id_parcours' })
 
     User.belongsToMany(Badge, { through: 'userbadge' })
     Badge.belongsToMany(User, { through: 'userbadge' })
@@ -100,7 +97,6 @@ export const initDb = () => {
         animation.forEach((animation) => {
             Animation.create({
                 name: animation.name,
-                id_point: animation.id_point,
             }).then((createdAnimation) => {
                 console.log(createdAnimation.toJSON());
 
@@ -128,7 +124,7 @@ export const initDb = () => {
             Badge.create({
                 name: badge.name,
                 image: badge.image,
-                id_point: badge.id_point,
+                id_parcours: badge.id_parcours,
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 

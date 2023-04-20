@@ -6,8 +6,6 @@ export class Animation extends Model {
 	id_animation: number;
 
 	name: string;
-
-	id_point: number;
 }
 
 const concatRequiredMessage = (data: string) => {
@@ -28,14 +26,6 @@ Animation.init(
 				notEmpty: { msg: concatRequiredMessage("Nom de l'animation") },
 			},
 		},
-		id_point: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: Point,
-                key: 'id_point',
-            },
-        },
 	},
 	{
 		sequelize,

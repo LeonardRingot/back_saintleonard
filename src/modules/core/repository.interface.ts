@@ -1,10 +1,8 @@
-import { FullUserDto } from "../Dto/utilisateur.dto";
-
 export interface IRepository<T> {
 	findById(id: number): Promise<T | null>;
 	findAll(options?: any): Promise<T[]>;
 	create(t: T): Promise<T>;
-	update(t: T, id: number): Promise<boolean | number>;
+	update(t: T, id: number, id2?: number): Promise<boolean | number>;
 	delete(id: number): Promise<boolean | number>;
 }
 
@@ -13,7 +11,7 @@ export interface IRepositoryUser<D,T> {
 	findById(id: number): Promise<T | null>;
 	findAll(options?: any): Promise<T[]>;
 	create(t: T): Promise<T>;
-	update(t: T, id: number): Promise<boolean | number>;
+	update(t: T, id: number, id2?: number): Promise<boolean | number>;
 	delete(id: number): Promise<boolean | number>;
 }
 

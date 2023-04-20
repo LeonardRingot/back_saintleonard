@@ -22,7 +22,7 @@ Parcours.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
-				notEmpty: { msg: concatRequiredMessage("nom du badge") },
+				notEmpty: { msg: concatRequiredMessage("nom du parcours") },
 			},
 		}
     },

@@ -1,7 +1,7 @@
 import { IRepository, IRepositoryUser } from "../core/repository.interface";
 import { AuthIService } from "../core/service.interface";
-import { AuthUserDto, FullUserDto, UserDto } from "../dto/utilisateur.dto";
-import { TokenDto } from "../dto/token.dto";
+import { TokenDto } from "../Dto/token.dto"; 
+import { AuthUserDto, FullUserDto, UserDto } from "../Dto/utilisateur.dto";
 import { Token } from "../Models/token.model";
 
 import bcrypt from "bcrypt";

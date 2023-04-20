@@ -5,7 +5,7 @@ import { Animation } from "../Models/animation.model";
 import { AnimationMapper } from "../Mapper/animation.mapper";
 import { QCM } from "../Models/qcm.model";
 import { SimpleQuestion } from "../Models/simpleQuestion.model";
-import { Point } from "../Models/points.model";
+import { Parcours } from "../Models/parcours.model";
 
 export class AnimationRepository implements IRepository<AnimationDto> {
 
@@ -15,7 +15,7 @@ export class AnimationRepository implements IRepository<AnimationDto> {
 	 * @returns
 	 */
 	async findById(id: number): Promise<AnimationDto | null> {
-		const result = await Animation.findByPk(id, { include: [QCM, SimpleQuestion, Point]});
+		const result = await Animation.findByPk(id, { include: [QCM, SimpleQuestion, Parcours]});
 		if (result === null) throw new NotFoundError("Animation not found");
 		return AnimationMapper.MapToDto(result);
 	}
@@ -26,7 +26,7 @@ export class AnimationRepository implements IRepository<AnimationDto> {
 	 * @returns
 	 */
 	async findAll(filter: any): Promise<Array<AnimationDto>> {
-		return Animation.findAll({ include: [QCM, SimpleQuestion, Point],
+		return Animation.findAll({ include: [QCM, SimpleQuestion, Parcours],
 			where: filter,
 		}).then((data: Array<Animation>) => {
 			return data.map((animation: Animation) => {

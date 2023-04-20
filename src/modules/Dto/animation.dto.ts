@@ -1,3 +1,4 @@
+import { ParcoursDto } from "./parcours.dto";
 import { QcmDto } from "./qcm.dto";
 import { SimpleQuestionDto } from "./simpleQuestion.dto";
 
@@ -6,9 +7,7 @@ export interface AnimationDto {
 
 	name: string;
 
-	id_point: number;
-
-	Point: string;
+	Parcours?: ParcoursDto[];
 
 	SimpleQuestions?: SimpleQuestionDto[];
 

@@ -1,13 +1,25 @@
 import { AnimationDto } from "../Dto/animation.dto";
+import { ParcoursDto } from "../Dto/parcours.dto";
 import { QcmDto } from "../Dto/qcm.dto";
 import { SimpleQuestionDto } from "../Dto/simpleQuestion.dto";
 import { Animation } from "../Models/animation.model";
+import { Parcours } from "../Models/parcours.model";
 import { QCM } from "../Models/qcm.model";
 import { SimpleQuestion } from "../Models/simpleQuestion.model";
 
 export class AnimationMapper {
 	static MapToDto(animation: Animation | null): AnimationDto {
 		if (animation === null) return null as any;
+
+		let ParcoursListe: Parcours[] = animation.get({plain: true}).parcours;
+
+		const ParcoursData = ParcoursListe.map((parcours) => {
+			const ParcoursDto: ParcoursDto = {
+				id_parcours: parcours.id_parcours,
+				name: parcours.name
+			};
+			return ParcoursDto;
+		});
 
 		let QCMs: QCM[] = animation.get({ plain: true }).qcms;
 		
@@ -36,8 +48,7 @@ export class AnimationMapper {
 		const Dto: AnimationDto = {
 			idAnimation: animation.id_animation,
 			name: animation.name,
-			id_point: animation.id_point,
-			Point: animation.get({ plain: true }).point.name,
+			Parcours: ParcoursData,
 			QCMs: QCMsData,
 			SimpleQuestions: SimpleQuestionsData,
 		};

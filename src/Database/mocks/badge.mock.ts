@@ -2,11 +2,11 @@ export const badge = [
     {
         name: "pierre",
         image: "./rock.jpg",
-        id_point: 1,
+        id_parcours: 1,
     },
     {
         name: "eau",
         image: "./water.jpg",
-        id_point: 2,
+        id_parcours: 2,
     },
 ];

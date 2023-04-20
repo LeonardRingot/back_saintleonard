@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../../Database/sequelize";
+import { Badge } from "./badge.model";
 
 export class User extends Model {
 	id_pseudo: number;
@@ -13,6 +14,8 @@ export class User extends Model {
 	email!: string;
 
     is_admin: boolean;
+
+	public addBadge!: (badge: Badge) => Promise<void>;
 }
 
 const concatRequiredMessage = (data: string) => {

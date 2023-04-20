@@ -52,13 +52,15 @@ export class UserService implements IService<UserDto> {
 		});
 	}
 
-	/**
-	 *
-	 * @param t
-	 * @returns
-	 */
-	async update(user: User, id_td_user: number): Promise<boolean | number> {
-		return this.userRepository.update(user, id_td_user).then((data) => {
+/**
+ * 
+ * @param user 
+ * @param idPseudo 
+ * @param idBadge 
+ * @returns 
+ */
+	async update(user: User, idPseudo: number, idBadge: number): Promise<boolean | number> {
+		return this.userRepository.update(user, idPseudo, idBadge).then((data) => {
 			return data;
 		});
 	}

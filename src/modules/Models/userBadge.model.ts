@@ -32,7 +32,6 @@ UserBadge.init(
 	{
 		sequelize,
 		modelName: "userbadge",
-		timestamps: false,
 		freezeTableName: true,
 	}
 );
