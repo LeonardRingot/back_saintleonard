@@ -59,33 +59,16 @@ export class UserRepository implements IRepositoryUser<FullUserDto, UserDto> {
         });
     }
 
-/**
- * 
- * @param user 
- * @param id 
- * @param idBadge 
- * @returns 
- */
-	async update(user: User, id: number, idBadge: number): Promise<boolean | number> {
-		const badge = await Badge.findByPk(idBadge);
-		if (!badge) {
-			throw new Error("Badge not found");
-		}
-
+	/**
+     * 
+     * @param user 
+     * @param id 
+     * @returns 
+     */
+	async update(user: User, id: number): Promise<boolean | number> {
 		return User.update(user, { where: { id_pseudo: id } }).then(
-			async (result) => {
-				if (result[0] !== 1) {
-					return false;
-				}
-
-				const updatedUser = await User.findByPk(id);
-				if (!updatedUser) {
-					throw new Error("User not found");
-				}
-
-				await updatedUser.addBadge(badge);
-
-				return true;
+			(data: Array<boolean | number>) => {
+				return data[0];
 			}
 		);
 	}
