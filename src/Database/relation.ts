@@ -22,16 +22,18 @@ import sequelize from './sequelize'
 import { ParcoursPoint } from '~/modules/Models/parcoursPoint.model'
 import { parcourspoint } from './mocks/parcoursPoint.mock'
 import { UserBadge } from '~/modules/Models/userBadge.model'
-import { animationqcm } from './mocks/animationqcm.mock'
-import { AnimationQcm } from '~/modules/Models/animationqcm.model'
-import { animationsq } from './mocks/animationsq.mock'
-import { AnimationSq } from '~/modules/Models/animationsq.model'
 import { parcoursanimation } from './mocks/parcoursAnimation.mock'
 import { ParcoursAnimation } from '~/modules/Models/parcoursAnimation.model'
 
 export const relations = () => {
     User.hasMany(Token, { foreignKey: 'id_pseudo' })
     Token.belongsTo(User, { foreignKey: 'id_pseudo' })
+
+    Animation.hasMany(SimpleQuestion, { foreignKey: 'id_animation' })
+    SimpleQuestion.belongsTo(Animation, { foreignKey: 'id_animation' })
+
+    Animation.hasMany(QCM, { foreignKey: 'id_animation' })
+    QCM.belongsTo(Animation, { foreignKey: 'id_animation' })
 
     Parcours.hasOne(Badge, { foreignKey: 'id_parcours' })
     Badge.belongsTo(Parcours, { foreignKey: 'id_parcours' })
@@ -44,12 +46,6 @@ export const relations = () => {
 
     Parcours.belongsToMany(Animation, { through: 'parcoursanimation' })
     Animation.belongsToMany(Parcours, { through: 'parcoursanimation' })
-
-    Animation.belongsToMany(SimpleQuestion, { through: 'animationsq' })
-    SimpleQuestion.belongsToMany(Animation, { through: 'animationsq' })
-
-    Animation.belongsToMany(QCM, { through: 'animationqcm' })
-    QCM.belongsToMany(Animation, { through: 'animationqcm' })
 };
 
 export const initDb = () => {
@@ -97,27 +93,7 @@ export const initDb = () => {
         animation.forEach((animation) => {
             Animation.create({
                 name: animation.name,
-            }).then((createdAnimation) => {
-                console.log(createdAnimation.toJSON());
-
-                animationqcm.forEach((animQcm) => {
-                    if(animQcm.id_animation === createdAnimation.id_animation) {
-                        AnimationQcm.create({
-                            animationIdAnimation: animQcm.id_animation,
-                            qcmIdQcm: animQcm.id_qcm
-                        }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
-                    }
-                });
-
-                animationsq.forEach((animSq) => {
-                    if(animSq.id_animation === createdAnimation.id_animation) {
-                        AnimationSq.create({
-                            animationIdAnimation: animSq.id_animation,
-                            simpleQuestionIdSimpleQuestion: animSq.id_simple_question
-                        }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
-                    }
-                });
-            });
+            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
         })
 
         badge.forEach((badge) => {
@@ -136,13 +112,15 @@ export const initDb = () => {
                 optionb: qcm.optionb,
                 optionc: qcm.optionc,
                 optiond: qcm.optiond,
+                id_animation: qcm.id_animation
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 
         simpleQuestion.forEach((simpleQuestion) => {
             SimpleQuestion.create({
                 question: simpleQuestion.question,
-                response: simpleQuestion.response
+                response: simpleQuestion.response,
+                id_animation: simpleQuestion.id_animation
             }).then((response: { toJSON: () => string }) => console.log(response.toJSON()))
         })
 
