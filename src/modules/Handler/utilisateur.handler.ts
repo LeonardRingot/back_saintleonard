@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { IService } from "../core/service.interface";
 import { UserDto } from "../Dto/utilisateur.dto";
+import { log } from "console";
 
 const bcrypt = require("bcrypt");
 
@@ -74,8 +75,14 @@ export class UserHandler {
 				let hashedPassword = await bcrypt.hash(req.body.password, 10);
 				req.body = { ...req.body, password: hashedPassword };
 			}
-			const result = await this.userService.update(req.body, parseInt(req.params.id));
-			return res.status(200).json(result ? "Utilisateur Modifié !" : "Utilisateur Non Modifié !");
+			if(req.body.idBadge) {
+				const idBadge = req.body.idBadge as number;
+				const result = await this.userService.update(req.body, parseInt(req.params.id), idBadge);
+				return res.status(200).json(result ? "Utilisateur avec badge Modifié !" : "Utilisateur avec badge Non Modifié !");
+			} else {
+				const result = await this.userService.update(req.body, parseInt(req.params.id));
+				return res.status(200).json(result ? "Utilisateur Modifié !" : "Utilisateur Non Modifié !");
+			}
 		} catch (error) {
 			return res.status(500).json(error);
 		}

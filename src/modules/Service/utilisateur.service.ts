@@ -2,6 +2,7 @@ import { UserDto } from "../Dto/utilisateur.dto";
 import { IRepository } from "../core/repository.interface";
 import { User } from "../Models/utilisateur.model";
 import { IService } from "../core/service.interface";
+import { Badge } from "../Models/badge.model";
 
 export class UserService implements IService<UserDto> {
 	private userRepository: IRepository<UserDto>;
@@ -58,11 +59,32 @@ export class UserService implements IService<UserDto> {
  * @param idPseudo
  * @returns 
  */
-	async update(user: User, idPseudo: number): Promise<boolean | number> {
-		return this.userRepository.update(user, idPseudo).then((data) => {
-			return data;
-		});
-	}
+async update(user: User, idPseudo: number, idBadge?: number): Promise<boolean | number> {
+    if (idBadge) {
+        const badge = await Badge.findByPk(idBadge);
+        if (!badge) {
+            throw new Error("Badge not found");
+        }
+
+        const updatedUser = await User.update(user, { where: { id_pseudo: idPseudo } });
+        if (updatedUser[0] !== 1) {
+            return false;
+        }
+
+        const userInstance = await User.findByPk(idPseudo);
+        if (!userInstance) {
+            throw new Error("User not found");
+        }
+
+        await userInstance.addBadge(badge);
+
+        return true;
+    } else {
+        return this.userRepository.update(user, idPseudo).then((data) => {
+            return data;
+        });
+    }
+}
 
 	/**
 	 *
