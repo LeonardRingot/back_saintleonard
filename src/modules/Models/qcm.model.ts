@@ -2,7 +2,6 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../../Database/sequelize";
 
 export class QCM extends Model {
-	[x: string]: any;
 	id_qcm: number;
 
 	question: string;
@@ -16,7 +15,6 @@ export class QCM extends Model {
 	optionc: string;
 
 	optiond: string;
-
 }
 
 const concatRequiredMessage = (data: string) => {
