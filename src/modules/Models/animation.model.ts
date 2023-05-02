@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../../Database/sequelize";
-import { Point } from "./points.model";
 
 export class Animation extends Model {
 	id_animation: number;

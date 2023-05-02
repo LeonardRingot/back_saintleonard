@@ -38,7 +38,7 @@ export class ParcoursService implements IService<ParcoursDto> {
 	 * @param t
 	 * @returns
 	 */
-	async create(parcours: Parcours): Promise<ParcoursDto | null> {
+	async create(parcours: Parcours, idPoint?: number, idAnimation?: number): Promise<ParcoursDto | null> {
 		return this.parcoursRepository.create(parcours).then((data) => {
 			return data;
 		});
