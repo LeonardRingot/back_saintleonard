@@ -32,3 +32,7 @@ export interface AuthUserDto {
 
 	password: string;
 }
+export interface AuthAdminUserDto {
+	email: string;
+	password: string;
+}

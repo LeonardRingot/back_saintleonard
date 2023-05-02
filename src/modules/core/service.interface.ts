@@ -6,7 +6,8 @@ export interface IService<T> {
 	delete(id: number): Promise<boolean | number>;
 }
 
-export interface AuthIService<D, T> {
+export interface AuthIService<D, T, M> {
     login(d: D): Promise<D>;
     refreshToken(t: T): Promise<T>
+	loginAdmin(m:M):Promise<M>
 }

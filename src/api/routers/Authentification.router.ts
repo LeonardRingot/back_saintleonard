@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authentificationHandler } from "~/injection";
-
+import { User } from "~/modules/Models/utilisateur.model";
 export const authRouter = Router();
 
 /**
@@ -49,3 +49,23 @@ authRouter.post("/login", authentificationHandler.login);
  *          description: La requête s'est bien déroulée.
  */
 authRouter.post("/refresh", authentificationHandler.refreshToken);
+
+/**
+ * @openapi
+ * /api/v1/auth/loginadmin:
+ *  post:
+ *      tags: [Auth]
+ *      description: login
+ *      consumes:
+ *       - application/json
+ *      parameters:
+ *       - name: JSON
+ *         in: body
+ *         required: true
+ *         type: object
+ *         default: {"email": "raph", "password": "pizza" }
+ *      responses:
+ *        200:
+ *          description: La requête s'est bien déroulée.
+ */
+authRouter.post("/loginAdmin", authentificationHandler.loginAdmin);
