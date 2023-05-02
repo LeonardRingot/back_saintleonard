@@ -1,7 +1,7 @@
 import { IRepository, IRepositoryUser } from "../core/repository.interface";
 import { AuthIService } from "../core/service.interface";
 import { TokenDto } from "../Dto/token.dto"; 
-import { AuthUserDto, FullUserDto, UserDto } from "../Dto/utilisateur.dto";
+import { AuthAdminUserDto, AuthUserDto, FullUserDto, UserDto } from "../Dto/utilisateur.dto";
 import { Token } from "../Models/token.model";
 
 import bcrypt from "bcrypt";
@@ -22,7 +22,7 @@ passport.use(
     })
 );
 
-export class AuthentificationService implements AuthIService<AuthUserDto, TokenDto> {
+export class AuthentificationService implements AuthIService<AuthUserDto, TokenDto, AuthAdminUserDto> {
 
     private tokenRepository: IRepository<TokenDto>
     private userRepository: IRepositoryUser<FullUserDto, UserDto>
@@ -30,6 +30,37 @@ export class AuthentificationService implements AuthIService<AuthUserDto, TokenD
     constructor(_tokenRepository: IRepository<TokenDto>, _userRepository: IRepositoryUser<FullUserDto, UserDto>) {
         this.tokenRepository = _tokenRepository;
         this.userRepository = _userRepository;
+    }
+    async loginAdmin(credentials: AuthAdminUserDto): Promise<any> {
+        try {
+            const user = await this.userRepository.findByEmail(credentials.email)
+
+            // TODO 404
+            if (!user) return 
+            if (!await bcrypt.compare(credentials.password, user.password)) {
+                throw new Error('Invalid credentials')
+            }
+            
+            const accessToken = AuthentificationService.generateAccessToken({ pseudo: user.pseudo, id: user.id_pseudo, isAdmin: user.is_admin });
+            const refreshToken = AuthentificationService.generateRefreshToken({ pseudo: user.pseudo, id: user.id_pseudo, isAdmin: user.is_admin });
+
+               // enregister le token en database
+            
+            // Trouver un token par id_pseudo
+            // si occurence trouvé MODIFIER le token existant par le nouveau token
+            // si aucune occurance Creer token 
+            Token.create(
+            {
+                refresh_token: refreshToken,
+                id_pseudo: user.id_pseudo,
+            })
+            const idPseudo = user.id_pseudo;
+            return { refreshToken , accessToken, idPseudo }
+
+        } catch (err) {
+            console.log('service', err)
+            throw err
+        }
     }
 
     async login(credentials: AuthUserDto): Promise<any> {

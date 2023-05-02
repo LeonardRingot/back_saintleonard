@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { AuthIService } from "../core/service.interface";
 import { TokenDto } from "../Dto/token.dto";
-import { AuthUserDto } from "../Dto/utilisateur.dto";
+import { AuthUserDto, AuthAdminUserDto } from "../Dto/utilisateur.dto";
 
 
 export class AuthentificationHandler {
-    private authentificationService: AuthIService<AuthUserDto, TokenDto>
+    private authentificationService: AuthIService<AuthUserDto, TokenDto, AuthAdminUserDto>
 
-    constructor(service: AuthIService<AuthUserDto, TokenDto>) {
+    constructor(service: AuthIService<AuthUserDto, TokenDto,AuthAdminUserDto>) {
         this.authentificationService = service
     }
 
@@ -18,6 +18,21 @@ export class AuthentificationHandler {
 
             if (!result) {
                 return res.status(404).json({ message: 'pseudo not in database.' });
+            }
+            res.status(200).json(result)
+
+        } catch (err: any) {
+            res.status(401).json(err.message)
+        }
+
+    };
+    loginAdmin = async (req: Request, res: Response) => {
+        try {
+            const { email, password } = req.body
+            const result = await this.authentificationService.loginAdmin({ email, password })
+
+            if (!result) {
+                return res.status(404).json({ message: 'email not in database.' });
             }
             res.status(200).json(result)
 

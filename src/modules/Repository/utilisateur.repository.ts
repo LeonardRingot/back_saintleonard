@@ -6,6 +6,18 @@ import { NotFoundError } from "../core/errors/errors";
 import { Badge } from "../Models/badge.model";
 
 export class UserRepository implements IRepositoryUser<FullUserDto, UserDto> {
+   async findByEmail(email: string): Promise<FullUserDto | null> {
+        const user = await User.scope("withPassword").findOne({
+            where: {
+                email: email,
+                is_admin:true
+            },
+        });
+        if (!user) {
+            return null;
+        }
+        return UserMapper.MapFullToDto(user);
+    }
     /**
      *
      * @param pseudo
