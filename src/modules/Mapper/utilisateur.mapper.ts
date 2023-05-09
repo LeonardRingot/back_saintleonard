@@ -11,8 +11,9 @@ export class UserMapper {
 
 		const badgesData = badges.map((badge) => {
 			const badgeDto: BadgeDto = {
+                id_badge: badge.id_badge,
                 name: badge.name,
-                image: badge.image
+                image: badge.image,
             };
 			return badgeDto;
 		});

@@ -6,9 +6,10 @@ export class BadgeMapper {
 		if (badge === null) return null as any;
 
 		const Dto: BadgeDto = {
-            name: badge.name,
-            image: badge.image
-        };
+			id_badge: badge.id_badge,
+			name: badge.name,
+			image: badge.image,
+		};
 		return Dto;
 	}
 }
