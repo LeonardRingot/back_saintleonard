@@ -104,13 +104,58 @@ export class AnimationService implements IService<AnimationDto> {
      * @param t
      * @returns
      */
-    async update(
-        animation: AnimationDto,
-        id: number
-    ): Promise<boolean | number> {
-        return this.animationRepository.update(animation, id).then((data) => {
-            return data;
-        });
+    async update(animation: AnimationDto, id: number): Promise<boolean | number> {
+        console.log('test')
+        const t = await sequelize.transaction();
+        try {
+            const { name, SimpleQuestions, QCMs, Parcours } = animation;
+            const updatedAnimation = await Animation.update(
+                { name, Parcours },
+                { where: { id_animation: id }, transaction: t }
+            );
+            console.log('MAJ', updatedAnimation)
+            
+            if (SimpleQuestions && SimpleQuestions.length > 0) {
+                await Promise.all(
+                    SimpleQuestions.map(async (q) => {
+                        const updateValues: any = {};
+                        if (q.question) updateValues.question = q.question;
+                        if (q.response) updateValues.response = q.response;
+                        const updatedSQ = await SimpleQuestion.update(
+                            updateValues,
+                            { where: { id_simple_question: q.id_simple_question }, transaction: t }
+                        );
+                        return updatedSQ;
+                    })
+                );
+            }
+    
+            if (QCMs && QCMs.length > 0) {
+                await Promise.all(
+                    QCMs.map(async (q) => {
+                        const updateValues: any = {};
+                        if (q.question) updateValues.question = q.question;
+                        if (q.correctResponse) updateValues.correct_response = q.correctResponse;
+                        if (q.optionA) updateValues.optiona = q.optionA;
+                        if (q.optionB) updateValues.optionb = q.optionB;
+                        if (q.optionC) updateValues.optionc = q.optionC;
+                        if (q.optionD) updateValues.optiond = q.optionD;
+                        const updatedQcm = await QCM.update(
+                            updateValues,
+                            { where: { id_qcm: q.id_qcm }, transaction: t }
+                        );
+                        return updatedQcm;
+                    })
+                );
+            }
+    
+            await t.commit();
+            return updatedAnimation[0] === 1;
+        } catch (err) {
+            await t.rollback();
+            console.error(err);
+            throw new Error("Erreur lors de la mise à jour de l'animation");
+        }
     }
 
     /**

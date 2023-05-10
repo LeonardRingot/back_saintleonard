@@ -50,12 +50,17 @@ export class AnimationRepository implements IRepository<AnimationDto> {
 	 * @param animation
 	 */
 	async update(animation: AnimationDto, id: number): Promise<boolean | number> {
-		return Animation.update(animation, { where: { id_animation: id } }).then(
+		const whereClause = { id_animation: id };
+		if (!id) {
+			throw new Error("Invalid ID");
+		}
+		return Animation.update(animation, { where: whereClause }).then(
 			(data: Array<boolean | number>) => {
 				return data[0];
 			}
 		);
 	}
+
 
 	/**
 	 *
