@@ -53,7 +53,7 @@ parcoursRouter.get("/:id", parcoursHandler.getParcoursById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"name": "Le Parcours",}
+ *         default: {"name": "Le Paaaaaaaaaaklllaaaaaaarcours","points": [{ id: 1, position: 1 }, { id: 2, position: 2 } ],"animations": [{ id: 1, position: 3 }]}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

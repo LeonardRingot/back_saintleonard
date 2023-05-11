@@ -53,6 +53,7 @@ export class ParcoursHandler {
      */
 	createParcours = async (req: Request, res: Response) => {
 		try {
+			console.log(req.body);
 			const result = await this.parcoursService.create(req.body);
 			return res.status(200).json(result);
 		} catch (error) {
