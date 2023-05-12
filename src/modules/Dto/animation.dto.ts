@@ -7,8 +7,6 @@ export interface AnimationDto {
 
 	name: string;
 
-	Parcours?: ParcoursDto[];
-
 	SimpleQuestions?: SimpleQuestionDto[];
 
 	QCMs?: QcmDto[];

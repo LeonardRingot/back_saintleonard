@@ -105,48 +105,67 @@ export class AnimationService implements IService<AnimationDto> {
      * @returns
      */
     async update(animation: AnimationDto, id: number): Promise<boolean | number> {
-        console.log('test')
         const t = await sequelize.transaction();
         try {
-            const { name, SimpleQuestions, QCMs, Parcours } = animation;
+            const { name, SimpleQuestions, QCMs } = animation;
             const updatedAnimation = await Animation.update(
-                { name, Parcours },
+                { name },
                 { where: { id_animation: id }, transaction: t }
             );
-            console.log('MAJ', updatedAnimation)
-            
             if (SimpleQuestions && SimpleQuestions.length > 0) {
                 await Promise.all(
                     SimpleQuestions.map(async (q) => {
                         const updateValues: any = {};
                         if (q.question) updateValues.question = q.question;
                         if (q.response) updateValues.response = q.response;
-                        const updatedSQ = await SimpleQuestion.update(
-                            updateValues,
-                            { where: { id_simple_question: q.id_simple_question }, transaction: t }
-                        );
-                        return updatedSQ;
+                        
+                        if (q.id_simple_question) {
+                            // Mise à jour de la question simple existante
+                            const updatedSQ = await SimpleQuestion.update(
+                                updateValues,
+                                { where: { id_simple_question: q.id_simple_question, id_animation: id }, transaction: t }
+                            );
+                            return updatedSQ;
+                        } else {
+                            // Création d'une nouvelle question simple
+                            updateValues.id_animation = id;
+                            const createdSQ = await SimpleQuestion.create(updateValues, { transaction: t });
+                            return createdSQ;
+                        }
                     })
                 );
             }
     
             if (QCMs && QCMs.length > 0) {
-                await Promise.all(
-                    QCMs.map(async (q) => {
-                        const updateValues: any = {};
-                        if (q.question) updateValues.question = q.question;
-                        if (q.correctResponse) updateValues.correct_response = q.correctResponse;
-                        if (q.optionA) updateValues.optiona = q.optionA;
-                        if (q.optionB) updateValues.optionb = q.optionB;
-                        if (q.optionC) updateValues.optionc = q.optionC;
-                        if (q.optionD) updateValues.optiond = q.optionD;
-                        const updatedQcm = await QCM.update(
-                            updateValues,
-                            { where: { id_qcm: q.id_qcm }, transaction: t }
-                        );
-                        return updatedQcm;
-                    })
-                );
+    await Promise.all(
+        QCMs.map(async (q) => {
+            const updateValues: any = {};
+            if (q.question) updateValues.question = q.question;
+            if (q.correctResponse) updateValues.correct_response = q.correctResponse;
+            if (q.optionA) updateValues.optiona = q.optionA;
+            if (q.optionB) updateValues.optionb = q.optionB;
+            if (q.optionC) updateValues.optionc = q.optionC;
+            if (q.optionD) updateValues.optiond = q.optionD;
+
+            if (q.id_qcm) {
+                // Mise à jour du QCM existant
+                const existingQcm = await QCM.findOne({
+                    where: { id_qcm: q.id_qcm, id_animation: id },
+                });
+
+                if (existingQcm) {
+                    // QCM existant trouvé, mettre à jour les valeurs
+                    const updatedQcm = await existingQcm.update(updateValues, { transaction: t });
+                    return updatedQcm;
+                }
+            }
+
+            // Aucun QCM existant trouvé ou aucun ID spécifié, créer un nouveau QCM
+            updateValues.id_animation = id;
+            const createdQcm = await QCM.create(updateValues, { transaction: t });
+            return createdQcm;
+        })
+    );
             }
     
             await t.commit();

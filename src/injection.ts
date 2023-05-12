@@ -31,7 +31,7 @@ import { UserService } from "./modules/Service/utilisateur.service";
 
 export const animationHandler = new AnimationHandler(new AnimationService(new AnimationRepository()));
 export const badgeHandler = new BadgeHandler(new BadgeService(new BadgeRepository()));
-export const parcoursHandler = new ParcoursHandler(new ParcoursService(new ParcoursRepository(), new PointRepository()));
+export const parcoursHandler = new ParcoursHandler(new ParcoursService(new ParcoursRepository()));
 export const pointHandler = new PointHandler(new PointService(new PointRepository()));
 export const qcmHandler = new QcmHandler(new QcmService(new QcmRepository()));
 export const simpleQuestionHandler = new SimpleQuestionHandler(new SimpleQuestionService(new SimpleQuestionRepository()));

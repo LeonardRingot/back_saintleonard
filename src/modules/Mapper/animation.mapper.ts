@@ -11,16 +11,6 @@ export class AnimationMapper {
 	static MapToDto(animation: Animation | null): AnimationDto {
 		if (animation === null) return null as any;
 
-		let ParcoursListe: Parcours[] = animation.get({plain: true}).parcours;
-
-		const ParcoursData = ParcoursListe.map((parcours) => {
-			const ParcoursDto: ParcoursDto = {
-				id_parcours: parcours.id_parcours,
-				name: parcours.name
-			};
-			return ParcoursDto;
-		});
-
 		let QCMs: QCM[] = animation.get({ plain: true }).qcms;
 		
 		const QCMsData = QCMs.map((qcm) => {
@@ -48,7 +38,6 @@ export class AnimationMapper {
 		const Dto: AnimationDto = {
 			idAnimation: animation.id_animation,
 			name: animation.name,
-			Parcours: ParcoursData,
 			QCMs: QCMsData,
 			SimpleQuestions: SimpleQuestionsData,
 		};

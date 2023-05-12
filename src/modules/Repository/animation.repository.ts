@@ -15,7 +15,7 @@ export class AnimationRepository implements IRepository<AnimationDto> {
 	 * @returns
 	 */
 	async findById(id: number): Promise<AnimationDto | null> {
-		const result = await Animation.findByPk(id, { include: [QCM, SimpleQuestion, Parcours]});
+		const result = await Animation.findByPk(id, { include: [QCM, SimpleQuestion]});
 		if (result === null) throw new NotFoundError("Animation not found");
 		return AnimationMapper.MapToDto(result);
 	}
@@ -26,7 +26,7 @@ export class AnimationRepository implements IRepository<AnimationDto> {
 	 * @returns
 	 */
 	async findAll(filter: any): Promise<Array<AnimationDto>> {
-		return Animation.findAll({ include: [QCM, SimpleQuestion, Parcours],
+		return Animation.findAll({ include: [QCM, SimpleQuestion],
 			where: filter,
 		}).then((data: Array<Animation>) => {
 			return data.map((animation: Animation) => {

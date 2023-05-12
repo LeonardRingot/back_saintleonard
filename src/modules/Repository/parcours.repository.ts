@@ -51,13 +51,14 @@ export class ParcoursRepository implements IRepository<ParcoursDto> {
 	 *
 	 * @param parcours
 	 */
-	async update(parcours: Parcours, id: number): Promise<boolean | number> {
+	async update(parcours: ParcoursDto, id: number): Promise<boolean | number> {
 		return Parcours.update(parcours, { where: { id_parcours: id } }).then(
 			(data: Array<boolean | number>) => {
 				return data[0];
 			}
 		);
 	}
+
 
 	/**
 	 *
