@@ -15,6 +15,7 @@ export class AnimationMapper {
 		
 		const QCMsData = QCMs.map((qcm) => {
 			const QcmDto: QcmDto = {
+				id_qcm: qcm.id_qcm,
 				question: qcm.question,
 				correctResponse: qcm.correct_response,
 				optionA: qcm.optiona,
@@ -29,6 +30,7 @@ export class AnimationMapper {
 		
 		const SimpleQuestionsData = SimpleQuestions.map((simpleQuestion) => {
 			const SimpleQuestionDto: SimpleQuestionDto = {
+				id_simple_question: simpleQuestion.id_simple_question,
 				question: simpleQuestion.question,
 				response: simpleQuestion.response
 			};
