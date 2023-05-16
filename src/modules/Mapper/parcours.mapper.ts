@@ -9,16 +9,6 @@ export class ParcoursMapper {
 	static MapToDto(parcours: Parcours | null): ParcoursDto {
 		if (parcours === null) return null as any;
 
-		let animations: Animation[] = parcours.get({ plain: true }).animations;
-		
-		const animationsData = animations.map((animation) => {
-			const animationDto: AnimationDto = {
-				idAnimation: animation.id_animation,
-				name: animation.name,
-			};
-			return animationDto;
-		});
-
 		let points: Point[] = parcours.get({ plain: true }).points;
 		
 		const pointsData = points.map((point) => {
@@ -38,8 +28,8 @@ export class ParcoursMapper {
 			id_parcours: parcours.id_parcours,
 			name: parcours.name,
 			badge: parcours.get({ plain: true }).badge,
-			points: pointsData,
-			animations: animationsData,
+			animation: parcours.get({plain: true}).animation,
+			points: pointsData
 		};
 		return Dto;
 	}

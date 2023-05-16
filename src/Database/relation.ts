@@ -22,8 +22,6 @@ import sequelize from './sequelize'
 import { ParcoursPoint } from '~/modules/Models/parcoursPoint.model'
 import { parcourspoint } from './mocks/parcoursPoint.mock'
 import { UserBadge } from '~/modules/Models/userBadge.model'
-import { parcoursanimation } from './mocks/parcoursAnimation.mock'
-import { ParcoursAnimation } from '~/modules/Models/parcoursAnimation.model'
 
 export const relations = () => {
     User.hasMany(Token, { foreignKey: 'id_pseudo' })
@@ -38,14 +36,14 @@ export const relations = () => {
     Parcours.hasOne(Badge, { foreignKey: 'id_parcours' })
     Badge.belongsTo(Parcours, { foreignKey: 'id_parcours' })
 
+    Animation.hasMany(Parcours, { foreignKey: 'id_animation' })
+    Parcours.belongsTo(Animation, { foreignKey: 'id_animation' })
+
     User.belongsToMany(Badge, { through: 'userbadge' })
     Badge.belongsToMany(User, { through: 'userbadge' })
 
     Parcours.belongsToMany(Point, { through: 'parcourspoint' })
     Point.belongsToMany(Parcours, { through: 'parcourspoint' })
-
-    Parcours.belongsToMany(Animation, { through: 'parcoursanimation' })
-    Animation.belongsToMany(Parcours, { through: 'parcoursanimation' })
 };
 
 export const initDb = () => {
@@ -60,10 +58,17 @@ export const initDb = () => {
                 qrcode: point.qrcode,
             })
         })
+
+        animation.forEach((animation) => {
+            Animation.create({
+                name: animation.name,
+            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
+        })
         
                 parcours.forEach((parcours) => {
                     Parcours.create({
-                        name: parcours.name
+                        name: parcours.name,
+                        id_animation: parcours.id_animation,
                     }).then((createdParcours) => {
                         console.log(createdParcours.toJSON());
         
@@ -75,26 +80,8 @@ export const initDb = () => {
                                 }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
                             }
                         });
-        
-                        
-                        parcoursanimation.forEach((parcoursAnimation) => {
-                            if ( parcoursAnimation.id_parcours === createdParcours.id_parcours ) {
-                                ParcoursAnimation.create({
-                                    parcourIdParcours: parcoursAnimation.id_parcours,
-                                    animationIdAnimation: parcoursAnimation.id_animation,
-                                }).then((response: { toJSON: () => string }) =>
-                                    console.log(response.toJSON())
-                                );
-                            }
-                        });
                     });
                 })
-
-        animation.forEach((animation) => {
-            Animation.create({
-                name: animation.name,
-            }).then((response: { toJSON: () => string }) => console.log(response.toJSON()));
-        })
 
         badge.forEach((badge) => {
             Badge.create({

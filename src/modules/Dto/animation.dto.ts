@@ -3,7 +3,7 @@ import { QcmDto } from "./qcm.dto";
 import { SimpleQuestionDto } from "./simpleQuestion.dto";
 
 export interface AnimationDto {
-	idAnimation: number;
+	id_animation: number;
 
 	name: string;
 

@@ -4,7 +4,8 @@ import { IService } from "../core/service.interface";
 import { ParcoursDto } from "../Dto/parcours.dto";;
 import { Parcours } from "../Models/parcours.model";
 import { ParcoursPoint } from "../Models/parcoursPoint.model";
-import { ParcoursAnimation } from "../Models/parcoursAnimation.model";
+
+import { Op } from 'sequelize';
 
 export class ParcoursService implements IService<ParcoursDto> {
     private parcoursRepository: IRepository<ParcoursDto>;
@@ -47,17 +48,7 @@ export class ParcoursService implements IService<ParcoursDto> {
 		
         try {
             createdParcours = await Parcours.create({name: parcours.name,},{ transaction });
-			if (parcours.animations && parcours.animations.length > 0) {
-				const animationIds = parcours.animations.map((anim: any) => anim.idAnimation);
-				await ParcoursAnimation.bulkCreate(
-					animationIds.map((animationId: number) => ({
-						parcourIdParcours: createdParcours!.id_parcours,
-						animationIdAnimation: animationId,
-					})),
-					{ transaction }
-				);
-			}
-			
+
             if (parcours.points && parcours.points.length > 0) {
                 const pointIds = parcours.points.map(
                     (point: any) => point.id_point
@@ -85,13 +76,13 @@ export class ParcoursService implements IService<ParcoursDto> {
      * @param t
      * @returns
      */
-    async update(parcours: ParcoursDto, id: number): Promise<boolean | number> {
+    async update(parcours: ParcoursDto, id_parcours: number): Promise<boolean | number> {
         const t = await sequelize.transaction();
         try {
-            const { name, points, animations } = parcours;
+            const { name, points } = parcours;
     
             // Récupérer le parcours actuel de la base de données
-            const currentParcours = await this.parcoursRepository.findById(id);
+            const currentParcours = await this.parcoursRepository.findById(id_parcours);
     
             if (!currentParcours) {
                 throw new Error('Parcours introuvable');
@@ -101,47 +92,10 @@ export class ParcoursService implements IService<ParcoursDto> {
             if (name !== currentParcours.name) {
                 await Parcours.update(
                     { name },
-                    { where: { id_parcours: id }, transaction: t }
+                    { where: { id_parcours: id_parcours }, transaction: t }
                 );
             }
-    
-            // Gérer les animations du parcours
-            const currentAnimations = currentParcours.animations;
-    
-            // Identifier les animations à supprimer
-            const animationsToDelete = currentAnimations?.filter((animation: any) =>
-                animations && !animations.some((a: any) => a.idAnimation === animation.idAnimation)
-            ) || [];
-    
-            // Identifier les nouvelles animations à ajouter
-            const animationsToAdd = animations?.filter((animation: any) => 
-                currentAnimations && !currentAnimations.some((a: any) => a.idAnimation === animation.idAnimation)
-            );
-    
-            // Supprimer les animations du parcours qui ne sont plus présentes
-            if (animationsToDelete.length > 0) {
-                const animationIdsToDelete = animationsToDelete.map((animation: any) => animation.idAnimation);
-                await ParcoursAnimation.destroy({
-                    where: {
-                        parcourIdParcours: id,
-                        animationIdAnimation: animationIdsToDelete
-                    },
-                    transaction: t
-                });
-            }
-    
-            // Ajouter les nouvelles animations au parcours
-            if (animationsToAdd && animationsToAdd.length > 0) {
-                const animationIdsToAdd = animationsToAdd.map((animation: any) => animation.idAnimation);
-                await ParcoursAnimation.bulkCreate(
-                    animationIdsToAdd.map((animationId: number) => ({
-                        parcourIdParcours: id,
-                        animationIdAnimation: animationId,
-                    })),
-                    { transaction: t }
-                );
-            }
-    
+
             // Gérer les points du parcours
             const currentPoints = currentParcours.points;
     
@@ -160,8 +114,10 @@ export class ParcoursService implements IService<ParcoursDto> {
                 const pointIdsToDelete = pointsToDelete.map((point: any) => point.idPoint);
                 await ParcoursPoint.destroy({
                     where: {
-                        parcourIdParcours: id,
-                        pointIdPoint: pointIdsToDelete
+                        parcourIdParcours: id_parcours,
+                        pointIdPoint: {
+                            [Op.in]: pointIdsToDelete
+                        } as any
                     },
                     transaction: t
                 });
@@ -172,8 +128,9 @@ export class ParcoursService implements IService<ParcoursDto> {
                 const pointIdsToAdd = pointsToAdd.map((point: any) => point.idPoint);
                 await ParcoursPoint.bulkCreate(
                     pointIdsToAdd.map((pointId: number) => ({
-                        parcourIdParcours: id,
+                        parcourIdParcours: id_parcours,
                         pointIdPoint: pointId,
+                        // positionParcours: position,
                     })),
                     { transaction: t }
                 );
@@ -183,7 +140,7 @@ export class ParcoursService implements IService<ParcoursDto> {
             return true;
         } catch (error) {
             await t.rollback();
-            console.error(error);
+            console.log(error);
             return false;
         }
     }

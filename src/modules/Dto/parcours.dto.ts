@@ -6,6 +6,6 @@ export interface ParcoursDto {
 	id_parcours: number;
 	name: string;
 	points?: PointDto[];
-	animations?: AnimationDto[];
+	animation?: AnimationDto;
 	badge?: BadgeDto;
 }

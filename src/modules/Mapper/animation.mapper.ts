@@ -38,7 +38,7 @@ export class AnimationMapper {
 		});
 
 		const Dto: AnimationDto = {
-			idAnimation: animation.id_animation,
+			id_animation: animation.id_animation,
 			name: animation.name,
 			QCMs: QCMsData,
 			SimpleQuestions: SimpleQuestionsData,
