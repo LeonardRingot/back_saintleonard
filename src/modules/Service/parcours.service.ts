@@ -86,9 +86,106 @@ export class ParcoursService implements IService<ParcoursDto> {
      * @returns
      */
     async update(parcours: ParcoursDto, id: number): Promise<boolean | number> {
-        return this.parcoursRepository.update(parcours, id).then((data) => {
-            return data;
-        });
+        const t = await sequelize.transaction();
+        try {
+            const { name, points, animations } = parcours;
+    
+            // Récupérer le parcours actuel de la base de données
+            const currentParcours = await this.parcoursRepository.findById(id);
+    
+            if (!currentParcours) {
+                throw new Error('Parcours introuvable');
+            }
+    
+            // Vérifier si le nom du parcours a été modifié
+            if (name !== currentParcours.name) {
+                await Parcours.update(
+                    { name },
+                    { where: { id_parcours: id }, transaction: t }
+                );
+            }
+    
+            // Gérer les animations du parcours
+            const currentAnimations = currentParcours.animations;
+    
+            // Identifier les animations à supprimer
+            const animationsToDelete = currentAnimations?.filter((animation: any) =>
+                animations && !animations.some((a: any) => a.idAnimation === animation.idAnimation)
+            ) || [];
+    
+            // Identifier les nouvelles animations à ajouter
+            const animationsToAdd = animations?.filter((animation: any) => 
+                currentAnimations && !currentAnimations.some((a: any) => a.idAnimation === animation.idAnimation)
+            );
+    
+            // Supprimer les animations du parcours qui ne sont plus présentes
+            if (animationsToDelete.length > 0) {
+                const animationIdsToDelete = animationsToDelete.map((animation: any) => animation.idAnimation);
+                await ParcoursAnimation.destroy({
+                    where: {
+                        parcourIdParcours: id,
+                        animationIdAnimation: animationIdsToDelete
+                    },
+                    transaction: t
+                });
+            }
+    
+            // Ajouter les nouvelles animations au parcours
+            if (animationsToAdd && animationsToAdd.length > 0) {
+                const animationIdsToAdd = animationsToAdd.map((animation: any) => animation.idAnimation);
+                await ParcoursAnimation.bulkCreate(
+                    animationIdsToAdd.map((animationId: number) => ({
+                        parcourIdParcours: id,
+                        animationIdAnimation: animationId,
+                    })),
+                    { transaction: t }
+                );
+            }
+    
+            // Gérer les points du parcours
+            const currentPoints = currentParcours.points;
+    
+            // Identifier les points à supprimer
+            const pointsToDelete = currentPoints?.filter((point: any) =>
+                points && !points.some((a: any) => a.idPoint === point.idPoint)
+            ) || [];
+    
+            // Identifier les nouvelles points à ajouter
+            const pointsToAdd = points?.filter((point: any) => 
+                currentPoints && !currentPoints.some((a: any) => a.idPoint === point.idPoint)
+            );
+    
+            // Supprimer les points du parcours qui ne sont plus présentes
+            if (pointsToDelete.length > 0) {
+                const pointIdsToDelete = pointsToDelete.map((point: any) => point.idPoint);
+                await ParcoursPoint.destroy({
+                    where: {
+                        parcourIdParcours: id,
+                        pointIdPoint: pointIdsToDelete
+                    },
+                    transaction: t
+                });
+            }
+    
+            // Ajouter les nouvelles points au parcours
+            if (pointsToAdd && pointsToAdd.length > 0) {
+                const pointIdsToAdd = pointsToAdd.map((point: any) => point.idPoint);
+                await ParcoursPoint.bulkCreate(
+                    pointIdsToAdd.map((pointId: number) => ({
+                        parcourIdParcours: id,
+                        pointIdPoint: pointId,
+                    })),
+                    { transaction: t }
+                );
+            }
+    
+            await t.commit();
+            return true;
+        } catch (error) {
+            await t.rollback();
+            console.error(error);
+            return false;
+        }
     }
 
     /**
