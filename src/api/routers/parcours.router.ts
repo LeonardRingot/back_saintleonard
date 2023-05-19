@@ -53,7 +53,7 @@ parcoursRouter.get("/:id", parcoursHandler.getParcoursById);
  *         in: body
  *         required: true
  *         type: object
- *         default: {"name": "Le nouveau Parcours ","points": [{ id_point: 1, position: 1 }, { id_point: 2, position: 2 } ],"animations": [{ idAnimation: 1, position: 3 }]}
+ *         default: {"name": "Le nouveau Parcours", "animation": {"id_animation": 3}, "points": [{ id_point: 1, position: 1 }, { id_point: 2, position: 2 } ]}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.
@@ -78,7 +78,7 @@ parcoursRouter.post("/", parcoursHandler.createParcours);
  *         in: body
  *         required: true
  *         type: formData
- *         default: {"name": "Le Parcours",}
+ *         default: {"name": "Le nouveau Parcours", "animation": {"id_animation": 3}, "points": [{ id_point: 1, position: 1 }, { id_point: 2, position: 2 } ]}
  *      responses:
  *        200:
  *          description: La requête s'est bien déroulée.

@@ -11,6 +11,10 @@ export class User extends Model {
 
 	birthdate!: string;
 
+	city: string;
+
+	zip_code: string;
+
 	email!: string;
 
     is_admin: boolean;
@@ -30,14 +34,14 @@ User.init(
 			primaryKey: true,
 		},
 		pseudo: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(50),
 			allowNull: false,
 			validate: {
 				notEmpty: { msg: concatRequiredMessage("Pseudo") },
 			},
 		},
         password: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             validate: {
                 notEmpty: { msg: concatRequiredMessage("Mot de passe") },
             },
@@ -45,7 +49,12 @@ User.init(
 		birthdate: {
 			type: DataTypes.DATE,
 		},
-		
+		city: {
+			type: DataTypes.STRING(100),
+		},
+		zip_code: {
+			type: DataTypes.STRING(10),
+		},
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,

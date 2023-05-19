@@ -5,6 +5,10 @@ export interface UserDto {
 	pseudo: string;
 	
     birthdate: string;
+
+	city: string;
+
+	zip_code: string;
 	
 	age?: number;
 
@@ -21,6 +25,10 @@ export interface FullUserDto {
 	password: string;
 
     birthdate: string;
+
+	city: string;
+
+	zip_code: string;
 
 	email: string;
 

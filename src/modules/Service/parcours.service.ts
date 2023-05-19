@@ -47,7 +47,10 @@ export class ParcoursService implements IService<ParcoursDto> {
 		const transaction = await sequelize.transaction();
 		
         try {
-            createdParcours = await Parcours.create({name: parcours.name,},{ transaction });
+            createdParcours = await Parcours.create({
+                name: parcours.name,
+                id_animation: parcours.animation ? parcours.animation.id_animation : null,
+            },{ transaction });
 
             if (parcours.points && parcours.points.length > 0) {
                 const pointIds = parcours.points.map(
@@ -79,33 +82,31 @@ export class ParcoursService implements IService<ParcoursDto> {
     async update(parcours: ParcoursDto, id_parcours: number): Promise<boolean | number> {
         const t = await sequelize.transaction();
         try {
-            const { name, points } = parcours;
-    
             // Récupérer le parcours actuel de la base de données
             const currentParcours = await this.parcoursRepository.findById(id_parcours);
     
             if (!currentParcours) {
                 throw new Error('Parcours introuvable');
             }
-    
-            // Vérifier si le nom du parcours a été modifié
-            if (name !== currentParcours.name) {
-                await Parcours.update(
-                    { name },
-                    { where: { id_parcours: id_parcours }, transaction: t }
-                );
-            }
+
+            await Parcours.update(
+                { 
+                    name: parcours.name,
+                    id_animation: parcours.animation ? parcours.animation.id_animation : null,
+                },
+                { where: { id_parcours: id_parcours }, transaction: t }
+            );
 
             // Gérer les points du parcours
             const currentPoints = currentParcours.points;
     
             // Identifier les points à supprimer
             const pointsToDelete = currentPoints?.filter((point: any) =>
-                points && !points.some((a: any) => a.idPoint === point.idPoint)
+                parcours.points && !parcours.points.some((a: any) => a.idPoint === point.idPoint)
             ) || [];
     
             // Identifier les nouvelles points à ajouter
-            const pointsToAdd = points?.filter((point: any) => 
+            const pointsToAdd = parcours.points?.filter((point: any) => 
                 currentPoints && !currentPoints.some((a: any) => a.idPoint === point.idPoint)
             );
     

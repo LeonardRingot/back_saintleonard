@@ -124,6 +124,8 @@ export const initDb = () => {
                 password: user.password,
                 email: user.email,
                 birthdate: user.birthdate,
+                city: user.city,
+                zip_code: user.zip_code
             }).then((createdUser) => {
                 console.log(createdUser.toJSON());
 

@@ -21,6 +21,8 @@ export class UserMapper {
 		const Dto: UserDto = {
             pseudo: user.pseudo,
             birthdate: user.birthdate,
+            city: user.city,
+            zip_code: user.zip_code,
             email: user.email,
             badges: badgesData,
         };
@@ -34,9 +36,11 @@ export class UserMapper {
             id_pseudo: user.id_pseudo,
             pseudo: user.pseudo,
             birthdate: user.birthdate,
+            city: user.city,
+            zip_code: user.zip_code,
             email: user.email,
             password: user.password,
-            is_admin: user.is_admin
+            is_admin: user.is_admin,
         };
 		return Dto;
 	}
