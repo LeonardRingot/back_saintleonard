@@ -15,6 +15,8 @@ export class Point extends Model {
     lon: number;
 
 	qrcode: string;
+
+	parcourspoint!: any;
 }
 
 const concatRequiredMessage = (data: string) => {

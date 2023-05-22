@@ -19,7 +19,8 @@ export class ParcoursMapper {
 				mainDescription: point.main_description,
 				lat: point.lat,
 				lon: point.lon,
-				QrCode: point.qrcode
+				QrCode: point.qrcode,
+				position: point.parcourspoint.positionParcours
 			};
 			return pointDto;
 		});
