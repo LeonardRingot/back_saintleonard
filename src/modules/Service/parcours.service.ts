@@ -42,37 +42,34 @@ export class ParcoursService implements IService<ParcoursDto> {
  * @param parcours 
  * @returns 
  */
-    async create(parcours: ParcoursDto): Promise<ParcoursDto | null> {
-        let createdParcours: ParcoursDto | null = null;
-		const transaction = await sequelize.transaction();
-		
-        try {
-            createdParcours = await Parcours.create({
-                name: parcours.name,
-                id_animation: parcours.animation ? parcours.animation.id_animation : null,
-            },{ transaction });
+async create(parcours: ParcoursDto): Promise<ParcoursDto | null> {
+    let createdParcours: ParcoursDto | null = null;
+    const transaction = await sequelize.transaction();
 
-            if (parcours.points && parcours.points.length > 0) {
-                const pointIds = parcours.points.map(
-                    (point: any) => point.id_point
-                );
-                await ParcoursPoint.bulkCreate(
-                    pointIds.map((pointId: number) => ({
-                        parcourIdParcours: createdParcours!.id_parcours,
-                        pointIdPoint: pointId,
-                    })),
-                    { transaction }
-                );
-            }
+    try {
+        createdParcours = await Parcours.create({
+            name: parcours.name,
+            id_animation: parcours.animation ? parcours.animation.id_animation : null,
+        }, { transaction });
 
-            await transaction.commit();
-        } catch (error) {
-			await transaction.rollback();
-			console.error(error);
+        if (parcours.points && parcours.points.length > 0) {
+            await Promise.all(parcours.points.map(async (point, index) => {
+                await ParcoursPoint.create({
+                    parcourIdParcours: createdParcours!.id_parcours,
+                    pointIdPoint: point.id_point,
+                    positionParcours: point.position
+                }, { transaction });
+            }));
         }
 
-        return createdParcours;
+        await transaction.commit();
+    } catch (error) {
+        await transaction.rollback();
+        console.error(error);
     }
+
+    return createdParcours;
+}
 
     /**
      *
@@ -102,39 +99,49 @@ export class ParcoursService implements IService<ParcoursDto> {
     
             // Identifier les points à supprimer
             const pointsToDelete = currentPoints?.filter((point: any) =>
-                parcours.points && !parcours.points.some((a: any) => a.idPoint === point.idPoint)
+                parcours.points && !parcours.points.some((a: any) => a.id_point === point.id_point && a.position === point.position)
             ) || [];
-    
             // Identifier les nouvelles points à ajouter
             const pointsToAdd = parcours.points?.filter((point: any) => 
-                currentPoints && !currentPoints.some((a: any) => a.idPoint === point.idPoint)
+                currentPoints && !currentPoints.some((a: any) => a.id_point === point.id_point && a.position === point.position)
             );
     
             // Supprimer les points du parcours qui ne sont plus présentes
             if (pointsToDelete.length > 0) {
-                const pointIdsToDelete = pointsToDelete.map((point: any) => point.idPoint);
-                await ParcoursPoint.destroy({
-                    where: {
-                        parcourIdParcours: id_parcours,
-                        pointIdPoint: {
-                            [Op.in]: pointIdsToDelete
-                        } as any
-                    },
-                    transaction: t
-                });
+                const pointIdsToDelete = pointsToDelete.map((point: any) => point.id_point);
+                await Promise.all(pointIdsToDelete.map(async (pointId: number) => {
+                    await ParcoursPoint.destroy({
+                        where: {
+                            parcourIdParcours: id_parcours,
+                            pointIdPoint: pointId
+                        },
+                        transaction: t
+                    });
+                }));
             }
     
             // Ajouter les nouvelles points au parcours
             if (pointsToAdd && pointsToAdd.length > 0) {
-                const pointIdsToAdd = pointsToAdd.map((point: any) => point.idPoint);
-                await ParcoursPoint.bulkCreate(
-                    pointIdsToAdd.map((pointId: number) => ({
-                        parcourIdParcours: id_parcours,
-                        pointIdPoint: pointId,
-                        // positionParcours: position,
-                    })),
-                    { transaction: t }
-                );
+                await Promise.all(pointsToAdd.map(async (point: any) => {
+                    const existingParcoursPoint = await ParcoursPoint.findOne({
+                        where: {
+                            parcourIdParcours: id_parcours,
+                            pointIdPoint: point.id_point
+                        },
+                        transaction: t
+                    });
+                
+                    if (existingParcoursPoint) {
+                        existingParcoursPoint.positionParcours = point.position;
+                        await existingParcoursPoint.save({ transaction: t });
+                    } else {
+                        await ParcoursPoint.create({
+                            parcourIdParcours: id_parcours,
+                            pointIdPoint: point.id_point,
+                            positionParcours: point.position,
+                        }, { transaction: t });
+                    }
+                }));
             }
     
             await t.commit();

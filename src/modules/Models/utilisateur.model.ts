@@ -36,6 +36,10 @@ User.init(
 		pseudo: {
 			type: DataTypes.STRING(50),
 			allowNull: false,
+			unique: {
+				name: 'pseudo',
+				msg: 'La valeur de ce champ doit être unique.',
+			},
 			validate: {
 				notEmpty: { msg: concatRequiredMessage("Pseudo") },
 			},
