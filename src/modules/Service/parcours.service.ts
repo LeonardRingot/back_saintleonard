@@ -1,4 +1,4 @@
-import sequelize from "~/Database/sequelize";
+import sequelize from "../../Database/sequelize";
 import { IRepository } from "../core/repository.interface";
 import { IService } from "../core/service.interface";
 import { ParcoursDto } from "../Dto/parcours.dto";;
@@ -21,7 +21,7 @@ export class ParcoursService implements IService<ParcoursDto> {
      */
     async findAll(options?: any): Promise<Array<ParcoursDto> | null> {
         return this.parcoursRepository.findAll(options).then((data) => {
-            return data;
+            return data || [];
         });
     }
 

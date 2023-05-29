@@ -1,4 +1,4 @@
-import sequelize from "~/Database/sequelize";
+import sequelize from "../../Database/sequelize";
 import { IRepository } from "../core/repository.interface";
 import { IService } from "../core/service.interface";
 import { AnimationDto } from "../Dto/animation.dto";
