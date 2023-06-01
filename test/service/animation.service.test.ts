@@ -98,5 +98,73 @@ describe('AnimationService', () => {
           expect(animationRepository.findById).toHaveBeenCalledWith(id);
         });
       });
+      describe('create', () => {
+        it('should create a new animation', async () => {
+          const animation: AnimationDto = {
+            id_animation: 1,
+            name: 'New Animation',
+            SimpleQuestions: [
+              { question: 'Question 1', response: 'Response 1', id_simple_question:1 },
+              { question: 'Question 2', response: 'Response 2' , id_simple_question:2},
+            ],
+            QCMs: [
+              {
+                question: 'QCM Question 1',
+                correctResponse: 'Option A',
+                optionA: 'Option A',
+                optionB: 'Option B',
+                optionC: 'Option C',
+                optionD: 'Option D',
+                id_qcm:1
+              },
+              {
+                question: 'QCM Question 2',
+                correctResponse: 'Option B',
+                optionA: 'Option A',
+                optionB: 'Option B',
+                optionC: 'Option C',
+                optionD: 'Option D',
+                id_qcm:2
+              },
+            ],
+          };
+      
+          const createdAnimation: AnimationDto = {
+            id_animation: 1,
+            name: 'New Animation',
+            SimpleQuestions: [
+              { question: 'Question 1', response: 'Response 1' , id_simple_question:1},
+              { question: 'Question 2', response: 'Response 2', id_simple_question:2 },
+            ],
+            QCMs: [
+              {
+                question: 'QCM Question 1',
+                correctResponse: 'Option A',
+                optionA: 'Option A',
+                optionB: 'Option B',
+                optionC: 'Option C',
+                optionD: 'Option D',
+                id_qcm:1
+              },
+              {
+                question: 'QCM Question 2',
+                correctResponse: 'Option B',
+                optionA: 'Option A',
+                optionB: 'Option B',
+                optionC: 'Option C',
+                optionD: 'Option D',
+                id_qcm:2
+              },
+            ],
+          };
+      
+          jest.spyOn(animationRepository, 'create').mockResolvedValue(createdAnimation);
+      
+          const result = await animationService.create(animation);
+      
+          expect(animationRepository.create).toHaveBeenCalledWith(animation); // Ensure animationRepository.create is called
+          expect(result).toEqual(createdAnimation);
+        });
+      });
 });
 

@@ -61,16 +61,12 @@ describe('AnimationRepository', () => {
     describe('findAll', () => {
       it('should return an array of AnimationDto', async () => {
         const filter = {};
-  
         // Définissez ici les valeurs attendues pour les animations retournées
         const expectedAnimations: AnimationDto[] = [];
-  
         // Mock la méthode Animation.findAll pour renvoyer les valeurs attendues
         Animation.findAll = jest.fn().mockResolvedValue(expectedAnimations);
-  
         // Appelez la méthode findAll du repository
         const result = await animationRepository.findAll(filter);
-  
         // Vérifiez les résultats
         expect(result).toEqual(expectedAnimations);
         expect(Animation.findAll).toHaveBeenCalledTimes(1);
@@ -134,13 +130,10 @@ describe('AnimationRepository', () => {
             ]
         };
         const id = 1;
-  
         // Mock la méthode Animation.update pour renvoyer true
         Animation.update = jest.fn().mockResolvedValue([true]);
-  
         // Appelez la méthode update du repository
         const result = await animationRepository.update(animationData, id);
-  
         // Vérifiez les résultats
         expect(result).toBe(true);
         expect(Animation.update).toHaveBeenCalledTimes(1);
@@ -151,13 +144,10 @@ describe('AnimationRepository', () => {
     describe('delete', () => {
       it('should delete the animation and return true', async () => {
         const id = 1;
-  
         // Mock la méthode Animation.destroy pour renvoyer true
         Animation.destroy = jest.fn().mockResolvedValue(true);
-  
         // Appelez la méthode delete du repository
         const result = await animationRepository.delete(id);
-  
         // Vérifiez les résultats
         expect(result).toBe(true);
         expect(Animation.destroy).toHaveBeenCalledTimes(1);
