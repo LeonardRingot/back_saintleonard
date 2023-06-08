@@ -1,4 +1,4 @@
-import { UserDto } from "../Dto/user.dto";
+import { UserDto } from "../Dto/utilisateur.dto";
 import { IRepository } from "../core/repository.interface";
 import { User } from "../Models/utilisateur.model";
 import { IService } from "../core/service.interface";

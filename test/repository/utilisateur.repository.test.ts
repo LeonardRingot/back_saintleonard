@@ -1,4 +1,4 @@
-import { FullUserDto } from "../../src/modules/Dto/user.dto";
+import { FullUserDto } from "../../src/modules/Dto/utilisateur.dto";
 import { UserRepository } from "../../src/modules/Repository/utilisateur.repository"
 import sequelize from "../../src/Database/sequelize";
 import { User } from "../../src/modules/Models/utilisateur.model";

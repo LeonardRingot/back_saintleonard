@@ -1,6 +1,6 @@
 import { IService } from "../../src/modules/core/service.interface";
 import { IRepository } from "../../src/modules/core/repository.interface";
-import { FullUserDto } from "../../src/modules/Dto/user.dto";
+import { FullUserDto } from "../../src/modules/Dto/utilisateur.dto";
 import { User } from "../../src/modules/Models/utilisateur.model";
 import { UserService } from "../../src/modules/Service/utilisateur.service";
 import sequelize from "../../src/Database/sequelize";

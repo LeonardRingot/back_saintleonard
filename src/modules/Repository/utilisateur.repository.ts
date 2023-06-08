@@ -1,4 +1,4 @@
-import { FullUserDto, UserDto } from "../Dto/user.dto";
+import { FullUserDto, UserDto } from "../Dto/utilisateur.dto";
 import { User } from "../Models/utilisateur.model";
 import { UserMapper } from "../Mapper/utilisateur.mapper";
 import { IRepositoryUser } from "../core/repository.interface";
