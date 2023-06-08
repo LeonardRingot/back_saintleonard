@@ -1,5 +1,5 @@
 import { BadgeDto } from "../Dto/badge.dto";
-import { FullUserDto, UserDto } from "../Dto/utilisateur.dto";
+import { FullUserDto, UserDto } from "../Dto/user.dto";
 import { Badge } from "../Models/badge.model";
 import { User } from "../Models/utilisateur.model";
 

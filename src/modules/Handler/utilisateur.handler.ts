@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IService } from "../core/service.interface";
-import { UserDto } from "../Dto/utilisateur.dto";
+import { UserDto } from "../Dto/user.dto";
 import { log } from "console";
 
 const bcrypt = require("bcrypt");

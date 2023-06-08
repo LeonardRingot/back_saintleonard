@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AuthIService } from "../core/service.interface";
 import { TokenDto } from "../Dto/token.dto";
-import { AuthUserDto, AuthAdminUserDto } from "../Dto/utilisateur.dto";
+import { AuthUserDto, AuthAdminUserDto } from "../Dto/user.dto";
 
 
 export class AuthentificationHandler {
